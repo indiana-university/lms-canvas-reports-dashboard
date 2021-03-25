@@ -1,0 +1,31 @@
+body {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+/* Show X entries */
+#reportTable_length {
+    float: right;
+    position: relative;
+    right: 50px;
+}
+
+th.sorting_asc {
+    background-image: url("../images/datatables_sort_ascending.png") !important;
+}
+
+th.sorting_desc {
+    background-image: url("../images/datatables_sort_descending.png") !important;
+}
+
+.hidden {
+	display: none;
+}
+
+.errorClass {
+    color: #800006;
+    background-color: #ffcccc;
+    margin: 10px 0px;
+    padding: 1.3em;
+    border-radius: 6px;
+    display: flex;
+}

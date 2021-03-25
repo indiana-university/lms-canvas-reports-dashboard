@@ -1,7 +1,9 @@
-package edu.iu.uits.lms.microservicestemplate.services;
+package edu.iu.uits.lms.reports.services;
 
-import edu.iu.uits.lms.microservicestemplate.config.ToolConfig;
-import edu.iu.uits.lms.microservicestemplate.controller.MicroservicesTemplateLtiController;
+import edu.iu.uits.lms.common.session.CourseSessionService;
+import edu.iu.uits.lms.common.variablereplacement.VariableReplacementService;
+import edu.iu.uits.lms.reports.config.ToolConfig;
+import edu.iu.uits.lms.reports.controller.ReportsLtiController;
 import lti.client.generated.api.LtiAuthApi;
 import lti.client.generated.api.LtiPropsApi;
 import lti.client.generated.model.LmsLtiAuthz;
@@ -40,7 +42,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(MicroservicesTemplateLtiController.class)
+@WebMvcTest(ReportsLtiController.class)
 @Import(ToolConfig.class)
 @ActiveProfiles("none")
 public class LtiLaunchSecurityTest {
@@ -53,6 +55,15 @@ public class LtiLaunchSecurityTest {
 
    @MockBean
    private LtiPropsApi ltiPropsApi;
+
+   @MockBean
+   private VariableReplacementService variableReplacementService = null;
+
+   @MockBean
+   private CourseSessionService courseSessionService;
+
+   @MockBean
+   private ToolConfig toolConfig;
 
    @Test
    public void ltiLaunch() throws Exception {

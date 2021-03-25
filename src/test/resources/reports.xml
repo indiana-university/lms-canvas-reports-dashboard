@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <LMS_REPORTS id="1" title="Report 1" description="This is the first report" contact="qwerty" url="http://google.com"
+                            createdOn="2019-05-09 15:15:15" modifiedOn="2019-05-09 15:15:15" sis_courses_only="true" new_window="false"/>
+    <LMS_REPORT_ROLES report_id="1" allowed_role="Instructor"/>
+
+    <LMS_REPORTS id="2" title="Report 2" description="This is the second report" contact="asdf" url="http://iu.edu"
+                 createdOn="2019-05-09 15:15:15" modifiedOn="2019-05-09 15:15:15" sis_courses_only="true" new_window="true"/>
+    <LMS_REPORT_ROLES report_id="2" allowed_role="Instructor"/>
+    <LMS_REPORT_ROLES report_id="2" allowed_role="Student"/>
+
+    <LMS_REPORTS id="3" title="Report 3" description="This is the third report" contact="asdf" url="http://iupui.edu"
+                 createdOn="2019-05-09 15:15:15" modifiedOn="2019-05-09 15:15:15" sis_courses_only="false" new_window="false"/>
+    <LMS_REPORT_ROLES report_id="3" allowed_role="Designer"/>
+
+</dataset>
