@@ -25,7 +25,6 @@
         <helm_service_name>reports</helm_service_name>
         <jquery.version>3.5.1</jquery.version>
         <lms-bom.version>4.0.6</lms-bom.version>
-        <lms-iuonly-client.version>4.0.7-SNAPSHOT</lms-iuonly-client.version>
         <spring-test-dbunit.version>1.3.0</spring-test-dbunit.version>
     </properties>
 
@@ -134,7 +133,6 @@
         <dependency>
             <groupId>edu.iu.uits.lms</groupId>
             <artifactId>lms-iuonly-client</artifactId>
-            <version>${lms-iuonly-client.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.springtestdbunit</groupId>
