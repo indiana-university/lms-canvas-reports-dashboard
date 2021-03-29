@@ -1,0 +1,40 @@
+.dataView {
+    display: inline-block;
+    margin: 10px 15px 10px 0px;
+    width: 252px;
+    height: 100%;
+    vertical-align: top;
+    font-size: 90%;
+}
+
+.dataView img {
+    width: 252px;
+    height: 189px;
+    max-width: 252px;
+    max-height: 189px;
+}
+
+.rvt-box--card {
+    box-shadow: 0 1px 3px 2px #ccc;
+}
+
+ol.reportData {
+    padding: 0;
+}
+
+.boxCardOverride {
+    min-height: 415px;
+}
+
+.modalImageWidth {
+    max-width: 100%;
+}
+
+/* override max width */
+.rvt-modal__inner {
+    max-width: 800px;
+}
+
+.thumbnail {
+    cursor: pointer;
+}
