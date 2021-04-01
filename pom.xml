@@ -24,7 +24,7 @@
         <docker_tag>stable</docker_tag>
         <helm_service_name>reports</helm_service_name>
         <jquery.version>3.5.1</jquery.version>
-        <lms-bom.version>4.0.6</lms-bom.version>
+        <lms-bom.version>4.0.7</lms-bom.version>
         <spring-test-dbunit.version>1.3.0</spring-test-dbunit.version>
     </properties>
 
