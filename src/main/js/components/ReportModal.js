@@ -7,10 +7,10 @@ const ReportModal = (props) => {
         modalContents = (
             <div className="rvt-modal__inner">
                 <header className="rvt-modal__header">
-                    <h1 className="rvt-modal__title" id="modal-title">{props.modalReport.title}</h1>
+                    <h1 className="rvt-modal__title" id="modal-title">Preview of {props.modalReport.title}</h1>
                 </header>
                 <div className="rvt-modal__body">
-                    <img src={props.modalReport.image} alt="Report Image" className="modalImageWidth" />
+                    <img src={props.modalReport.image} alt={props.modalReport.title + ' preview'} className="modalImageWidth" />
                 </div>
                 <div className="rvt-modal__controls">
                     <button type="button" className="rvt-button" data-modal-close="close">Close</button>
