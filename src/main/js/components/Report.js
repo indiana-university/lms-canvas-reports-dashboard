@@ -24,12 +24,14 @@ const Report = (props) => {
 
   let openReportSRText = ', ' + reportModel.title + ' (Opens in new window)'
 
+  let modalTriggerId = "report-preview-" + reportModel.id;
+
   return (
         <li className="dataView">
             <div className="rvt-box rvt-box--card boxCardOverride">
                 <div className="rvt-box__image">
-                <input type="image" src={reportModel.thumbnail} className="img-button rvt-button rvt-button--plain" data-modal-trigger="modal-card-popup"
-                     onClick={openModal.bind(this, reportModel.id, props.openModalMethod)} alt={'View preview of ' + reportModel.title} />
+                <input id={modalTriggerId} type="image" src={reportModel.thumbnail} className="img-button rvt-button rvt-button--plain popupTrigger" data-modal-trigger="modal-card-popup"
+                     onClick={openModal.bind(this, reportModel.id, props.openModalMethod, modalTriggerId)} alt={'View preview of ' + reportModel.title} />
 
                 </div>
                 <div className="rvt-box__body">
@@ -50,8 +52,12 @@ const Report = (props) => {
       );
 }
 
-function openModal(reportId, openModalMethod, event) {
-    openModalMethod(reportId)
+function openModal(reportId, openModalMethod, triggerId, event) {
+    // Change all of the triggers back to the default modal name
+    // We change it temporarily on modal close to refocus on the correct user card
+    $(".popupTrigger").attr("data-modal-trigger", "modal-card-popup");
+
+    openModalMethod(reportId, triggerId)
 }
 
 export default Report
