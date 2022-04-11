@@ -54,7 +54,7 @@ const Report = (props) => {
 
 function openModal(reportId, openModalMethod, triggerId, event) {
     // Change all of the triggers back to the default modal name
-    // We change it temporarily on modal close to refocus on the correct user card
+    // We change it temporarily on modal close to refocus on the correct report
     $(".popupTrigger").attr("data-modal-trigger", "modal-card-popup");
 
     openModalMethod(reportId, triggerId)

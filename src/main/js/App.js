@@ -48,8 +48,8 @@ class App extends React.Component {
             this.setState({modalReport: this.state.emptyReport})
 
             // There is only one modal, but rivet expects a unique modal for each
-            // user card. To return focus to the correct user card when the modal
-            // is closed, we need to set the card's data-modal-trigger attribute
+            // report. To return focus to the correct report when the modal
+            // is closed, we need to set the report's data-modal-trigger attribute
             // to a unique value and manually focus the modal. We will re-set to the
             // generic data-modal-trigger the next time a card is clicked
             var trigger = document.getElementById(this.state.modalTrigger)
