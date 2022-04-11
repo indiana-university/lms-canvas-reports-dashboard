@@ -51,7 +51,7 @@ class App extends React.Component {
             // report. To return focus to the correct report when the modal
             // is closed, we need to set the report's data-modal-trigger attribute
             // to a unique value and manually focus the modal. We will re-set to the
-            // generic data-modal-trigger the next time a card is clicked
+            // generic data-modal-trigger the next time a report is clicked
             var trigger = document.getElementById(this.state.modalTrigger)
             trigger.setAttribute("data-modal-trigger", "modal-card-popup-temp")
             Modal.focusTrigger("modal-card-popup-temp")
