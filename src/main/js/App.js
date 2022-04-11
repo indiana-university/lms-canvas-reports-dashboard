@@ -46,7 +46,17 @@ class App extends React.Component {
     document.addEventListener('modalClose', event => {
         if (event.detail.name() === 'modal-card-popup') {
             this.setState({modalReport: this.state.emptyReport})
+
+            // There is only one modal, but rivet expects a unique modal for each
+            // report. To return focus to the correct report when the modal
+            // is closed, we need to set the report's data-modal-trigger attribute
+            // to a unique value and manually focus the modal. We will re-set to the
+            // generic data-modal-trigger the next time a report is clicked
+            var trigger = document.getElementById(this.state.modalTrigger)
+            trigger.setAttribute("data-modal-trigger", "modal-card-popup-temp")
+            Modal.focusTrigger("modal-card-popup-temp")
         }
+
     }, false);
   }
 
@@ -71,7 +81,7 @@ class App extends React.Component {
   /**
    * Open the report modal
    */
-  imageClickOpenModal(reportId) {
+  imageClickOpenModal(reportId, triggerId) {
     //Find just the single report
     let filteredReports = this.state.reports.filter((reportModel) => {
         return (reportModel.id == reportId)
@@ -79,7 +89,7 @@ class App extends React.Component {
 
     var theReport = filteredReports[0];
 
-    this.setState({modalReport: theReport})
+    this.setState({modalReport: theReport, modalTrigger: triggerId})
   }
 }
 
