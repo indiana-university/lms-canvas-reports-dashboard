@@ -29,8 +29,8 @@
                 <td th:text="${enrollment.role}">role</td>
                 <td th:text="${enrollment.section}">section</td>
                 <td th:text="${enrollment.status}">status</td>
-                <td th:text="${#temporals.format(enrollment.createdDate, #messages.msg('rosterStatus.timeFormat'))}">createdDate</td>
-                <td th:text="${#temporals.format(enrollment.updatedDate, #messages.msg('rosterStatus.timeFormat'))}">updatedDate</td>
+                <td th:text="${#dates.format(enrollment.createdDate, #messages.msg('rosterStatus.timeFormat'))}">createdDate</td>
+                <td th:text="${#dates.format(enrollment.updatedDate, #messages.msg('rosterStatus.timeFormat'))}">updatedDate</td>
             </tr>
             </tbody>
         </table>

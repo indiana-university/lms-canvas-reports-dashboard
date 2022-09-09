@@ -94,7 +94,7 @@ class App extends React.Component {
 }
 
   function getReports() {
-    return axios.get(`app/rest/${window.config.courseid}/byRoles`);
+    return axios.get(`/app/rest/${window.config.courseid}/byRoles`);
   }
 
 export default App

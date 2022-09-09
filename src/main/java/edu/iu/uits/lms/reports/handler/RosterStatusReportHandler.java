@@ -1,13 +1,13 @@
 package edu.iu.uits.lms.reports.handler;
 
+import edu.iu.uits.lms.iuonly.exceptions.CanvasDataServiceException;
+import edu.iu.uits.lms.iuonly.model.Enrollment;
+import edu.iu.uits.lms.iuonly.services.CanvasDataServiceImpl;
 import edu.iu.uits.lms.reports.ReportsException;
-import iuonly.client.generated.api.CanvasDataApi;
-import iuonly.client.generated.model.Enrollment;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestClientException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +33,7 @@ public class RosterStatusReportHandler {
     private ResourceBundleMessageSource messageBundle = null;
 
     @Autowired
-    private CanvasDataApi canvasDataService = null;
+    private CanvasDataServiceImpl canvasDataService = null;
 
 
     public List<String> getReportHeaders() {
@@ -49,7 +49,7 @@ public class RosterStatusReportHandler {
     public  List<Enrollment> getReportData(String canvasCourseId) throws ReportsException {
         try {
             return canvasDataService.getRosterStatusInfo(canvasCourseId);
-        } catch (RestClientException e) {
+        } catch (CanvasDataServiceException e) {
             throw new ReportsException(e);
         }
     }

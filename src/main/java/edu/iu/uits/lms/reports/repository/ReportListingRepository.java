@@ -14,6 +14,6 @@ public interface ReportListingRepository extends PagingAndSortingRepository<Repo
     * @param roles
     * @return
     */
-   List<ReportListing> findDistinctByAllowedRolesInOrderByTitleAsc(List<String> roles);
+   List<ReportListing> findDistinctByAllowedRolesInOrderByTitleAsc(String[] roles);
 
 }

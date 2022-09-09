@@ -1,7 +1,7 @@
 package edu.iu.uits.lms.reports.service;
 
-import canvas.client.generated.api.CoursesApi;
-import canvas.client.generated.model.Course;
+import edu.iu.uits.lms.canvas.model.Course;
+import edu.iu.uits.lms.canvas.services.CourseService;
 import edu.iu.uits.lms.common.variablereplacement.MacroVariableMapper;
 import edu.iu.uits.lms.common.variablereplacement.VariableReplacementService;
 import edu.iu.uits.lms.reports.model.DecoratedReport;
@@ -23,10 +23,10 @@ public class ReportsService {
    private VariableReplacementService variableReplacementService = null;
 
    @Autowired
-   private CoursesApi coursesApi = null;
+   private CourseService courseService = null;
 
-   public List<DecoratedReport> getReportsToDisplay(String courseId, List<String> roles, MacroVariableMapper mapper) {
-      Course course = coursesApi.getCourse(courseId);
+   public List<DecoratedReport> getReportsToDisplay(String courseId, String[] roles, MacroVariableMapper mapper) {
+      Course course = courseService.getCourse(courseId);
 
       //Filter for the roles we want
       List<ReportListing> reportListings = reportListingRepository.findDistinctByAllowedRolesInOrderByTitleAsc(roles);

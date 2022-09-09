@@ -1,8 +1,10 @@
-package edu.iu.uits.lms.reports.controller;
+package edu.iu.uits.lms.reports.controller.rest;
 
 import edu.iu.uits.lms.reports.model.ReportListing;
 import edu.iu.uits.lms.reports.model.RestReportListing;
 import edu.iu.uits.lms.reports.repository.ReportListingRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +25,8 @@ import java.util.List;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 @RestController
-//@LmsSwaggerDocumentation
 @RequestMapping("/rest")
+@Tag(name = "ReportsRestController", description = "Interact with the LMS_REPORTS repository with CRUD operations")
 @Slf4j
 public class ReportsRestController {
 
@@ -32,17 +34,24 @@ public class ReportsRestController {
    private ReportListingRepository reportListingRepository;
 
    @GetMapping("/{id}")
+   @Operation(summary = "Get a ReportListing by id")
    public ReportListing getReportFromId(@PathVariable Long id) {
       return reportListingRepository.findById(id).orElse(null);
    }
 
    @GetMapping("/all")
+   @Operation(summary = "Get all ReportListing records")
    public List<ReportListing> getAll() {
       List<ReportListing> reports = (List<ReportListing>) reportListingRepository.findAll();
+      reports.forEach(r -> {
+         r.setImage(null);
+         r.setThumbnail(null);
+      });
       return reports;
    }
 
    @PutMapping(value = "/{id}")
+   @Operation(summary = "Update an existing ReportListing by id")
    public ResponseEntity updateReportListing(@PathVariable Long id, @RequestBody RestReportListing reportListing) {
       ReportListing updated = reportListingRepository.findById(id).orElse(null);
 
@@ -82,6 +91,7 @@ public class ReportsRestController {
    }
 
    @PostMapping(value = "/{id}/images")
+   @Operation(summary = "Update the images of an existing ReportListing by id")
    public ResponseEntity updateImages(@PathVariable Long id, @RequestParam(value = "reportImage", required = false) MultipartFile reportImage,
                                       @RequestParam(value = "thumbnail", required = false) MultipartFile thumbnail) {
       ReportListing updated = reportListingRepository.findById(id).orElse(null);
@@ -108,6 +118,7 @@ public class ReportsRestController {
    }
 
    @PostMapping("/")
+   @Operation(summary = "Create a new ReportListing")
    public ResponseEntity create(@RequestBody RestReportListing reportListing) {
       ReportListing newReportListing = new ReportListing();
       newReportListing.setTitle(reportListing.getTitle());
@@ -133,6 +144,7 @@ public class ReportsRestController {
    }
 
    @DeleteMapping("/{id}")
+   @Operation(summary = "Delete an existing ReportListing by id")
    public String delete(@PathVariable Long id) {
       reportListingRepository.deleteById(id);
       return "Delete success.";

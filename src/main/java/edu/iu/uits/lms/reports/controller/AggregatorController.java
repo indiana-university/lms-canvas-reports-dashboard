@@ -2,7 +2,7 @@ package edu.iu.uits.lms.reports.controller;
 
 import edu.iu.uits.lms.common.session.CourseSessionService;
 import edu.iu.uits.lms.common.variablereplacement.MacroVariableMapper;
-import edu.iu.uits.lms.lti.security.LtiAuthenticationToken;
+import edu.iu.uits.lms.lti.service.OidcTokenUtils;
 import edu.iu.uits.lms.reports.ReportConstants;
 import edu.iu.uits.lms.reports.model.DecoratedReport;
 import edu.iu.uits.lms.reports.service.ReportsService;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import uk.ac.ox.ctl.lti13.security.oauth2.client.lti.authentication.OidcAuthenticationToken;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -35,8 +36,10 @@ public class AggregatorController extends ReportsController {
    @GetMapping("/{courseId}/byRoles")
    public List<DecoratedReport> getReportsByRole(@PathVariable("courseId") String courseId, HttpSession session) {
       log.debug("in /app/rest/" + courseId + "/byRoles");
-      LtiAuthenticationToken token = getValidatedToken(courseId);
-      List<String> roles = courseSessionService.getAttributeFromSession(session, courseId, ReportConstants.ROLES_DATA_KEY, List.class);
+      OidcAuthenticationToken token = getValidatedToken(courseId);
+      OidcTokenUtils oidcTokenUtils = new OidcTokenUtils(token);
+//      List<String> roles = courseSessionService.getAttributeFromSession(session, courseId, ReportConstants.ROLES_DATA_KEY, List.class);
+      String[] roles = oidcTokenUtils.getCustomCanvasMembershipRoles();
       MacroVariableMapper mapper = courseSessionService.getAttributeFromSession(session, courseId, ReportConstants.VARIABLE_REPLACEMENT_DATA_KEY, MacroVariableMapper.class);
 
       List<DecoratedReport> decoratedReports = reportsService.getReportsToDisplay(courseId, roles, mapper);
