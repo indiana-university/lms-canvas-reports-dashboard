@@ -82,7 +82,7 @@
         <font-awesome.version>4.7.0</font-awesome.version>
         <jquery.version>3.5.1</jquery.version>
 
-        <lms-canvas-common-configuration.version>5.0.5-SNAPSHOT</lms-canvas-common-configuration.version>
+        <lms-canvas-common-configuration.version>5.0.7</lms-canvas-common-configuration.version>
         <lms-canvas-iu-custom-services.version>5.0.10</lms-canvas-iu-custom-services.version>
         <lms-canvas-lti-framework.version>5.1.10</lms-canvas-lti-framework.version>
         <lms-canvas-redis-config.version>5.0.7</lms-canvas-redis-config.version>
@@ -354,6 +354,8 @@
                     <excludes>
                         <exclude>**/env.properties</exclude>
                         <exclude>**/messages.properties</exclude>
+                        <exclude>**/application-reports.properties</exclude>
+                        <exclude>**/reports.sql</exclude>
                     </excludes>
                 </configuration>
             </plugin>
