@@ -72,6 +72,16 @@ public class ReportsService {
             decoratedReports.add(new DecoratedReport(originalReport, newUrl));
          }
       }
+      ReportListing rl = new ReportListing();
+      rl.setTitle("Role Inspector");
+      rl.setDescription("Temporary report to view role details");
+      rl.setUrl("/app/" + courseId + "/roleInspector");
+      rl.setNewWindow(true);
+      rl.setContact("CWM");
+      DecoratedReport dr = new DecoratedReport(rl, rl.getUrl());
+
+      decoratedReports.add(dr);
+
       return decoratedReports;
    }
 }
