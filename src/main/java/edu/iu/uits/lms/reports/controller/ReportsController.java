@@ -116,6 +116,20 @@ public class ReportsController extends OidcTokenAwareController {
         return "rosterStatus";
     }
 
+    @RequestMapping("/{courseId}/roleInspector")
+    @Secured(LTIConstants.BASE_USER_AUTHORITY)
+    public String roleInspector(@PathVariable("courseId") String courseId, Model model) {
+        OidcAuthenticationToken token = getValidatedToken(courseId);
+        OidcTokenUtils oidcTokenUtils = new OidcTokenUtils(token);
+
+        model.addAttribute("userLoginId", oidcTokenUtils.getUserLoginId());
+        model.addAttribute("roles", oidcTokenUtils.getRoles());
+        model.addAttribute("membershipRoles", oidcTokenUtils.getCustomCanvasMembershipRoles());
+
+        return "roleInspector";
+    }
+
+
     @RequestMapping(value = "/{courseId}/aggregator")
     @Secured(LTIConstants.BASE_USER_AUTHORITY)
     public String index(@PathVariable("courseId") String courseId, Model model, HttpSession httpSession) {
