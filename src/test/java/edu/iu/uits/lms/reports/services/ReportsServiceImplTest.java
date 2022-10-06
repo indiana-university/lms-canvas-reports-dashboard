@@ -99,7 +99,7 @@ public class ReportsServiceImplTest {
       List<DecoratedReport> reports = reportsService.getReportsToDisplay("12345", roles, null);
 
       Assertions.assertNotNull(reports);
-      Assertions.assertEquals(3, reports.size());
+      Assertions.assertEquals(4, reports.size());
    }
 
    @Test
@@ -108,7 +108,7 @@ public class ReportsServiceImplTest {
       List<DecoratedReport> reports = reportsService.getReportsToDisplay("54321", roles, null);
 
       Assertions.assertNotNull(reports);
-      Assertions.assertEquals(1, reports.size());
+      Assertions.assertEquals(2, reports.size());
    }
 
    @TestConfiguration
