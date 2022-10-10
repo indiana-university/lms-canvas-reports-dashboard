@@ -24,9 +24,21 @@
                 </ul>
             </div>
             <div>
-                <h2>Membership Roles</h2>
+                <h2>Membership Role ($Membership.role)</h2>
                 <ul>
                     <li th:each="role : ${membershipRoles}" th:text="${role}">Role</li>
+                </ul>
+            </div>
+            <div>
+                <h2>Canvas Membership Roles ($Canvas.membership.roles)</h2>
+                <ul>
+                    <li th:each="role : ${canvasMembershipRoles}" th:text="${role}">Role</li>
+                </ul>
+            </div>
+            <div>
+                <h2>Instructure Membership Roles ($com.Instructure.membership.roles)</h2>
+                <ul>
+                    <li th:each="role : ${instructureMembershipRoles}" th:text="${role}">Role</li>
                 </ul>
             </div>
         </div>
