@@ -125,7 +125,7 @@ public class ReportsController extends OidcTokenAwareController {
         model.addAttribute("userLoginId", oidcTokenUtils.getUserLoginId());
         model.addAttribute("roles", oidcTokenUtils.getRoles());
         model.addAttribute("membershipRoles", oidcTokenUtils.getCustomValue("membership_role").split(","));
-        model.addAttribute("instructureMembershipRoles", oidcTokenUtils.getCustomValue("instructure_membership_roles"));
+        model.addAttribute("instructureMembershipRoles", oidcTokenUtils.getCustomValue("instructure_membership_roles").split(","));
         model.addAttribute("canvasMembershipRoles", oidcTokenUtils.getCustomCanvasMembershipRoles());
 
         return "roleInspector";
