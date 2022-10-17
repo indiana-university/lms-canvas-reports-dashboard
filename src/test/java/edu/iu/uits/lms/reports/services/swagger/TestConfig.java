@@ -1,4 +1,4 @@
-package edu.iu.uits.lms.reports.services;
+package edu.iu.uits.lms.reports.services.swagger;
 
 /*-
  * #%L
@@ -33,11 +33,18 @@ package edu.iu.uits.lms.reports.services;
  * #L%
  */
 
-import edu.iu.uits.lms.iuonly.AbstractIuCustomRestDisabledLaunchSecurityTest;
-import edu.iu.uits.lms.reports.config.ToolConfig;
+import edu.iu.uits.lms.iuonly.services.CanvasDataServiceImpl;
+import edu.iu.uits.lms.reports.WebApplication;
+import edu.iu.uits.lms.reports.config.SecurityConfig;
+import edu.iu.uits.lms.reports.repository.ReportListingRepository;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 
-@Import({ToolConfig.class, TestConfig.class})
-public class IuCustomRestDisabledLaunchSecurityTest extends AbstractIuCustomRestDisabledLaunchSecurityTest {
+@Import({WebApplication.class, SecurityConfig.class})
+public class TestConfig {
+    @MockBean
+    private ReportListingRepository reportListingRepository;
 
+    @MockBean
+    private CanvasDataServiceImpl canvasDataService;
 }
