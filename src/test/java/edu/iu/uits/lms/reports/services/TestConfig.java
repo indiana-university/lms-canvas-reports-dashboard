@@ -35,6 +35,7 @@ package edu.iu.uits.lms.reports.services;
 
 import edu.iu.uits.lms.iuonly.services.CanvasDataServiceImpl;
 import edu.iu.uits.lms.reports.repository.ReportListingRepository;
+import edu.iu.uits.lms.reports.service.RoleResolver;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
@@ -45,4 +46,7 @@ public class TestConfig {
 
     @MockBean
     private CanvasDataServiceImpl canvasDataService;
+
+    @MockBean
+    private RoleResolver roleResolver;
 }

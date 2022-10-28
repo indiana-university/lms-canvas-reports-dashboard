@@ -41,6 +41,12 @@
                     <li th:each="role : ${instructureMembershipRoles}" th:text="${role}">Role</li>
                 </ul>
             </div>
+            <div>
+                <h2>Resolved Roles</h2>
+                <ul>
+                    <li th:each="role : ${resolvedRoles}" th:text="${role}">Role</li>
+                </ul>
+            </div>
         </div>
     </div>
 </body>
