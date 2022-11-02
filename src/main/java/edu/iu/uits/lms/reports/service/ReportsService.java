@@ -72,7 +72,6 @@ public class ReportsService {
             decoratedReports.add(new DecoratedReport(originalReport, newUrl));
          }
       }
-
       return decoratedReports;
    }
 }
