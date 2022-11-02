@@ -71,7 +71,7 @@ public class AggregatorController extends ReportsController {
       log.debug("in /app/rest/" + courseId + "/byRoles");
       OidcAuthenticationToken token = getValidatedToken(courseId);
       OidcTokenUtils oidcTokenUtils = new OidcTokenUtils(token);
-      String[] roles = oidcTokenUtils.getCustomCanvasMembershipRoles();
+      String[] roles = oidcTokenUtils.getCustomInstructureMembershipRoles();
       MacroVariableMapper mapper = courseSessionService.getAttributeFromSession(session, courseId, ReportConstants.VARIABLE_REPLACEMENT_DATA_KEY, MacroVariableMapper.class);
 
       List<DecoratedReport> decoratedReports = reportsService.getReportsToDisplay(courseId, roles, mapper);
