@@ -41,7 +41,6 @@ import edu.iu.uits.lms.reports.config.ToolConfig;
 import edu.iu.uits.lms.reports.controller.ReportsController;
 import edu.iu.uits.lms.reports.handler.RosterStatusReportHandler;
 import edu.iu.uits.lms.reports.service.ReportsService;
-import edu.iu.uits.lms.reports.service.RoleResolver;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -82,9 +81,6 @@ public class AppLaunchSecurityTest {
 
    @MockBean
    private CourseSessionService courseSessionService;
-
-   @MockBean
-   private RoleResolver roleResolver;
 
    @Test
    public void appNoAuthnLaunch() throws Exception {

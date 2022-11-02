@@ -48,7 +48,6 @@ import edu.iu.uits.lms.lti.service.OidcTokenUtils;
 import edu.iu.uits.lms.reports.ReportConstants;
 import edu.iu.uits.lms.reports.ReportsException;
 import edu.iu.uits.lms.reports.handler.RosterStatusReportHandler;
-import edu.iu.uits.lms.reports.service.RoleResolver;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,9 +82,6 @@ public class ReportsController extends OidcTokenAwareController {
 
     @Autowired
     private VariableReplacementService variableReplacementService = null;
-
-    @Autowired
-    private RoleResolver roleResolver;
 
     @RequestMapping(value = "/launch")
     @Secured(LTIConstants.BASE_USER_AUTHORITY)
@@ -129,18 +125,17 @@ public class ReportsController extends OidcTokenAwareController {
 
         String[] roles = oidcTokenUtils.getRoles();
         String[] membershipRoles = StringUtils.split(oidcTokenUtils.getCustomValue("membership_role"), ",");
-        String[] instructureMembershipRoles = StringUtils.split(oidcTokenUtils.getCustomValue("instructure_membership_roles"), ",");
+        String[] instructureMembershipRolesRaw = oidcTokenUtils.getCustomInstructureMembershipRolesRaw();
+        String[] instructureMembershipRoles = oidcTokenUtils.getCustomInstructureMembershipRoles();
         String[] canvasMembershipRoles = oidcTokenUtils.getCustomCanvasMembershipRoles();
 
         model.addAttribute("userLoginId", oidcTokenUtils.getUserLoginId());
         model.addAttribute("roles", roles);
         model.addAttribute("membershipRoles", membershipRoles);
-        model.addAttribute("instructureMembershipRoles", instructureMembershipRoles);
+        model.addAttribute("instructureMembershipRoles", instructureMembershipRolesRaw);
         model.addAttribute("canvasMembershipRoles", canvasMembershipRoles);
 
-        String[] resolvedRoles = roleResolver.resolve(roles, membershipRoles, instructureMembershipRoles, canvasMembershipRoles);
-
-        model.addAttribute("resolvedRoles", resolvedRoles);
+        model.addAttribute("resolvedRoles", instructureMembershipRoles);
 
         return "roleInspector";
     }
