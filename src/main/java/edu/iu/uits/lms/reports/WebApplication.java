@@ -59,7 +59,7 @@ import java.util.Date;
 @Slf4j
 @EnableRedisConfiguration
 @EnableCookieFilter(ignoredRequestPatterns = {"/rest/**", "/app/rest/**"})
-@EnableLtiClient(toolKeys = {"lms_reports", "lms_roster_status_report", "role_inspector"})
+@EnableLtiClient(toolKeys = {"lms_reports", "lms_roster_status_report"})
 @EnableCanvasClient
 @EnableIuOnlyClient
 @EnableConfigurationProperties(GitRepositoryState.class)
