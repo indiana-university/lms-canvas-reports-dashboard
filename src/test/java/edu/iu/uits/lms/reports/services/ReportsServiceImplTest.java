@@ -51,6 +51,7 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 
@@ -71,6 +72,9 @@ public class ReportsServiceImplTest {
 
    @Autowired
    private ReportListingRepository reportListingRepository;
+
+   @MockBean
+   private JwtDecoder jwtDecoder;
 
    @BeforeEach
    public void setUp() throws Exception {

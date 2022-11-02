@@ -1,4 +1,4 @@
-package edu.iu.uits.lms.reports.services;
+package edu.iu.uits.lms.reports.services.swagger;
 
 /*-
  * #%L
@@ -34,19 +34,17 @@ package edu.iu.uits.lms.reports.services;
  */
 
 import edu.iu.uits.lms.iuonly.services.CanvasDataServiceImpl;
+import edu.iu.uits.lms.reports.WebApplication;
+import edu.iu.uits.lms.reports.config.SecurityConfig;
 import edu.iu.uits.lms.reports.repository.ReportListingRepository;
-import edu.iu.uits.lms.reports.service.RoleResolver;
-import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 
-@TestConfiguration
+@Import({WebApplication.class, SecurityConfig.class})
 public class TestConfig {
     @MockBean
     private ReportListingRepository reportListingRepository;
 
     @MockBean
     private CanvasDataServiceImpl canvasDataService;
-
-    @MockBean
-    private RoleResolver roleResolver;
 }

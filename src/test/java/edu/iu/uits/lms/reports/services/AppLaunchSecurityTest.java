@@ -36,7 +36,7 @@ package edu.iu.uits.lms.reports.services;
 import edu.iu.uits.lms.canvas.services.CourseService;
 import edu.iu.uits.lms.common.session.CourseSessionService;
 import edu.iu.uits.lms.lti.LTIConstants;
-import edu.iu.uits.lms.lti.service.TestUtils;
+import edu.iu.uits.lms.lti.config.TestUtils;
 import edu.iu.uits.lms.reports.config.ToolConfig;
 import edu.iu.uits.lms.reports.controller.ReportsController;
 import edu.iu.uits.lms.reports.handler.RosterStatusReportHandler;
