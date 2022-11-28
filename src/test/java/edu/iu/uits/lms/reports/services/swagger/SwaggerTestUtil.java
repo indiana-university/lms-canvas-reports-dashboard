@@ -1,4 +1,4 @@
-package edu.iu.uits.lms.reports.config;
+package edu.iu.uits.lms.reports.services.swagger;
 
 /*-
  * #%L
@@ -33,20 +33,17 @@ package edu.iu.uits.lms.reports.config;
  * #L%
  */
 
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
-
+import java.util.ArrayList;
 import java.util.List;
 
-@Configuration
-@ConfigurationProperties(prefix = "reports")
-@Getter
-@Setter
-public class ToolConfig {
+import static edu.iu.uits.lms.iuonly.IuCustomConstants.IUCUSTOM_GROUP_CODE_PATH;
 
-   private String version;
-   private String env;
-   private List<String> instructorRoles;
+public class SwaggerTestUtil {
+   protected static  List<String> getEmbeddedSwaggerToolPaths(List<String> baseList) {
+      List<String> expandedList = new ArrayList<>(baseList);
+
+      expandedList.add(IUCUSTOM_GROUP_CODE_PATH);
+
+      return expandedList;
+   }
 }

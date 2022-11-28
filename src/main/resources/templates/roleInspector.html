@@ -34,36 +34,53 @@
 
 <html lang="en-US"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 <head>
-    <title th:text="#{withdrawnStudentGrades.pageTitle(${sisCourseId})}">Page Title</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
-    <link rel="stylesheet" type="text/css" th:href="@{/app/webjars/datatables/css/jquery.dataTables.min.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/app/webjars/datatables-buttons/css/buttons.dataTables.min.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/app/css/reports.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/app/webjars/font-awesome/css/font-awesome.min.css}"/>
-
+    <title>Role Inspector</title>
 </head>
 <body>
-	<main role="main">
-        <div class="errorClass" th:if="${error}">
-            <i class="fa fa-warning fa-lg"></i>
-            <span th:text="${error}">Error text goes here</span>
+    <div layout:fragment="content">
+        <div class="widthLimit">
+            <!-- main page -->
+            <h1 class="rvt-ts-32 rvt-p-tb-sm">Role Inspector</h1>
+            <div>
+                <h2>Username</h2>
+                <ul>
+                    <li th:text="${userLoginId}">username</li>
+                </ul>
+            </div>
+            <div>
+                <h2>Roles</h2>
+                <ul>
+                    <li th:each="role : ${roles}" th:text="${role}">Role</li>
+                </ul>
+            </div>
+            <div>
+                <h2>Membership Role ($Membership.role)</h2>
+                <ul>
+                    <li th:each="role : ${membershipRoles}" th:text="${role}">Role</li>
+                </ul>
+            </div>
+            <div>
+                <h2>Canvas Membership Roles ($Canvas.membership.roles)</h2>
+                <ul>
+                    <li th:each="role : ${canvasMembershipRoles}" th:text="${role}">Role</li>
+                </ul>
+            </div>
+            <div>
+                <h2>Instructure Membership Roles ($com.Instructure.membership.roles)</h2>
+                <ul>
+                    <li th:each="role : ${instructureMembershipRoles}" th:text="${role}">Role</li>
+                </ul>
+            </div>
+            <div>
+                <h2>Resolved Roles</h2>
+                <ul>
+                    <li th:each="role : ${resolvedRoles}" th:text="${role}">Role</li>
+                </ul>
+            </div>
         </div>
-	    <div layout:fragment="content">Page content goes here</div>
-	</main>
-
-    <script type="text/javascript" th:src="@{/app/webjars/jquery/jquery.min.js}"></script>
-    <script type="text/javascript" th:src="@{/app/webjars/datatables/js/jquery.dataTables.min.js}"></script>
-    <script type="text/javascript" th:src="@{/app/webjars/datatables-buttons/js/dataTables.buttons.min.js}"></script>
-    <script type="text/javascript" th:src="@{/app/webjars/datatables-buttons/js/buttons.html5.min.js}"></script>
-
-    <script type="text/javascript" th:src="@{/app/js/reports.js}"></script>
-    <script type="text/javascript" layout:fragment="js_init">
-    <!--
-        // js init goes here
-    -->
-</script>
+    </div>
 </body>
 </html>

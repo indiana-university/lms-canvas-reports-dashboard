@@ -1,4 +1,4 @@
-package edu.iu.uits.lms.reports.config;
+package edu.iu.uits.lms.reports.services.swagger;
 
 /*-
  * #%L
@@ -33,20 +33,18 @@ package edu.iu.uits.lms.reports.config;
  * #L%
  */
 
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
+import edu.iu.uits.lms.iuonly.services.CanvasDataServiceImpl;
+import edu.iu.uits.lms.reports.WebApplication;
+import edu.iu.uits.lms.reports.config.SecurityConfig;
+import edu.iu.uits.lms.reports.repository.ReportListingRepository;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 
-import java.util.List;
+@Import({WebApplication.class, SecurityConfig.class})
+public class TestConfig {
+    @MockBean
+    private ReportListingRepository reportListingRepository;
 
-@Configuration
-@ConfigurationProperties(prefix = "reports")
-@Getter
-@Setter
-public class ToolConfig {
-
-   private String version;
-   private String env;
-   private List<String> instructorRoles;
+    @MockBean
+    private CanvasDataServiceImpl canvasDataService;
 }

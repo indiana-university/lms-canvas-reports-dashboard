@@ -1,4 +1,4 @@
-package edu.iu.uits.lms.reports.config;
+package edu.iu.uits.lms.reports.services.swagger;
 
 /*-
  * #%L
@@ -33,20 +33,16 @@ package edu.iu.uits.lms.reports.config;
  * #L%
  */
 
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
+import edu.iu.uits.lms.lti.swagger.AbstractSwaggerCustomTest;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-@Configuration
-@ConfigurationProperties(prefix = "reports")
-@Getter
-@Setter
-public class ToolConfig {
+@SpringBootTest(classes = {TestConfig.class}, properties = {"lms.rabbitmq.queue_env_suffix = test"})
+public class SwaggerCustomTest extends AbstractSwaggerCustomTest {
 
-   private String version;
-   private String env;
-   private List<String> instructorRoles;
+   @Override
+   protected List<String> getEmbeddedSwaggerToolPaths() {
+      return SwaggerTestUtil.getEmbeddedSwaggerToolPaths(super.getEmbeddedSwaggerToolPaths());
+   }
 }

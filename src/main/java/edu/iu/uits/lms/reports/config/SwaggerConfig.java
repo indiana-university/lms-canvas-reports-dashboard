@@ -33,20 +33,32 @@ package edu.iu.uits.lms.reports.config;
  * #L%
  */
 
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.security.OAuthFlow;
+import io.swagger.v3.oas.annotations.security.OAuthFlows;
+import io.swagger.v3.oas.annotations.security.OAuthScope;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import org.springdoc.core.GroupedOpenApi;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
-import java.util.List;
-
+@Profile("swagger")
 @Configuration
-@ConfigurationProperties(prefix = "reports")
-@Getter
-@Setter
-public class ToolConfig {
-
-   private String version;
-   private String env;
-   private List<String> instructorRoles;
+@OpenAPIDefinition(info = @Info(title = "Reports REST Endpoints", version = "${reports.version}"))
+@SecurityScheme(name = "security_auth_reports", type = SecuritySchemeType.OAUTH2,
+      flows = @OAuthFlows(authorizationCode = @OAuthFlow(
+            authorizationUrl = "${springdoc.oAuthFlow.authorizationUrl}",
+            scopes = {@OAuthScope(name = "lms:rest")},
+            tokenUrl = "${springdoc.oAuthFlow.tokenUrl}")))
+public class SwaggerConfig {
+   @Bean
+   public GroupedOpenApi groupedOpenApi() {
+      return GroupedOpenApi.builder()
+            .group("reports")
+            .packagesToScan("edu.iu.uits.lms.reports.controller.rest")
+            .build();
+   }
 }
