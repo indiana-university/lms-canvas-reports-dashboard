@@ -49,6 +49,7 @@ import edu.iu.uits.lms.reports.ReportConstants;
 import edu.iu.uits.lms.reports.ReportsException;
 import edu.iu.uits.lms.reports.handler.RosterStatusReportHandler;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.security.access.annotation.Secured;
@@ -115,6 +116,30 @@ public class ReportsController extends OidcTokenAwareController {
 
         return "rosterStatus";
     }
+
+    @RequestMapping("/{courseId}/roleInspector")
+    @Secured(LTIConstants.BASE_USER_AUTHORITY)
+    public String roleInspector(@PathVariable("courseId") String courseId, Model model) {
+        OidcAuthenticationToken token = getValidatedToken(courseId);
+        OidcTokenUtils oidcTokenUtils = new OidcTokenUtils(token);
+
+        String[] roles = oidcTokenUtils.getRoles();
+        String[] membershipRoles = StringUtils.split(oidcTokenUtils.getCustomValue("membership_role"), ",");
+        String[] instructureMembershipRolesRaw = oidcTokenUtils.getCustomInstructureMembershipRolesRaw();
+        String[] instructureMembershipRoles = oidcTokenUtils.getCustomInstructureMembershipRoles();
+        String[] canvasMembershipRoles = oidcTokenUtils.getCustomCanvasMembershipRoles();
+
+        model.addAttribute("userLoginId", oidcTokenUtils.getUserLoginId());
+        model.addAttribute("roles", roles);
+        model.addAttribute("membershipRoles", membershipRoles);
+        model.addAttribute("instructureMembershipRoles", instructureMembershipRolesRaw);
+        model.addAttribute("canvasMembershipRoles", canvasMembershipRoles);
+
+        model.addAttribute("resolvedRoles", instructureMembershipRoles);
+
+        return "roleInspector";
+    }
+
 
     @RequestMapping(value = "/{courseId}/aggregator")
     @Secured(LTIConstants.BASE_USER_AUTHORITY)
