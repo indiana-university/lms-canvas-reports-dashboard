@@ -3,7 +3,7 @@
   #%L
   reports
   %%
-  Copyright (C) 2015 - 2022 Indiana University
+  Copyright (C) 2015 - 2023 Indiana University
   %%
   Redistribution and use in source and binary forms, with or without modification,
   are permitted provided that the following conditions are met:
@@ -32,35 +32,20 @@
   #L%
   -->
 
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en-US"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{dashboardLayout}">
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Reports and Dashboards</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/app/jsrivet/rivet-bundle.min.css}" />
-    <link rel="stylesheet" type="text/css" th:href="@{/app/css/dashboard.css}"/>
+    <meta charset="utf-8" />
+    <title>Reports and Dashboards - Loading</title>
+    <meta http-equiv="refresh" th:content="|0; url=${toolPath}|" />
 </head>
 <body>
-
-<div id="root"></div>
-
-<footer class="rvt-ts-12 rvt-container rvt-m-top-lg">
-    <div id="footer" th:text="${@serverInfo}"></div>
-</footer>
-
-<script th:inline="javascript">
-      /*<![CDATA[*/
-         var courseId = /*[[${courseId}]]*/ '12345';
-         const customId = /*[[${customId}]]*/
-         window.config = {courseid: courseId};
-       /*]]>*/
-</script>
-
-<script th:src="@{/app/jsreact/lms-lti-reports/lms-lti-reports.js}"></script>
-<script type="text/javascript" th:src="@{/app/jsrivet/rivet-bundle.min.js}"></script>
-<script type="text/javascript" th:src="@{/app/webjars/jquery/jquery.min.js}"></script>
-
-
+<div layout:fragment="content">
+    <div id="load" class="rvt-flex rvt-justify-center rvt-p-tb-xxl">
+        <div class="rvt-loader rvt-loader--lg" aria-label="Content loading"></div><span class="rvt-ts-md rvt-m-left-sm">Loading...</span>
+    </div>
+</div>
 </body>
 </html>
