@@ -82,7 +82,7 @@
         <font-awesome.version>4.7.0</font-awesome.version>
         <jquery.version>3.6.4</jquery.version>
 
-        <lms-canvas-rivet.version>5.2.3.1</lms-canvas-rivet.version>
+        <lms-canvas-rivet.version>5.2.3.1_1</lms-canvas-rivet.version>
         <lms-embedded-services.version>5.2.7</lms-embedded-services.version>
         <lms-team-spring-boot-it12>4.8</lms-team-spring-boot-it12>
 

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
   #%L
   reports
@@ -35,17 +36,18 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
-    <title>EDIT THIS</title>
+    <title>Reports and Dashboards</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" th:href="@{/app/jsrivet/rivet.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/app/jsrivet/rivet-icons.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/app/css/dashboard.css}"/>
 </head>
 
 <body>
 
-<div layout:fragment="content" class="rvt-container-xl rvt-p-top-sm" id="main-container" role="main">
+<div layout:fragment="content" class="rvt-container-xl rvt-p-top-sm" id="main-container" role="main" aria-labelledby="tool-title">
     <!-- Page content goes here -->
 </div>
 
@@ -54,6 +56,8 @@
 </footer>
 
 <script type="text/javascript" th:src="@{/app/jsrivet/rivet.min.js}"></script>
+<script defer th:src="@{/app/jsrivet/rivet-icons.js}"></script>
+<script type="module" th:src="@{/app/jsrivet/rivet-icon-element.js}"></script>
 <script type="text/javascript" th:src="@{/app/webjars/jquery/jquery.min.js}"></script>
 <script type="text/javascript" th:src="@{/app/js/reports.js}"></script>
 <script>
