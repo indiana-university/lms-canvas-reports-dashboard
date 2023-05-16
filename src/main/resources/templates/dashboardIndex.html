@@ -41,7 +41,7 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <h1 id="tool-title" class="rvt-ts-36 rvt-p-top-sm">Reports and Dashboards</h1>
+    <h1 id="tool-title" class="rvt-ts-36 rvt-p-top-sm" tabindex="-1">Reports and Dashboards</h1>
     <div th:if="${reports.isEmpty()}" class="rvt-m-top-lg">No available reports</div>
     <ol th:if="${!reports.isEmpty()}" class="reportData">
         <li th:each="reportModel : ${reports}" class="dataView">
