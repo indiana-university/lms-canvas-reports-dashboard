@@ -33,6 +33,8 @@ package edu.iu.uits.lms.reports.config;
  * #L%
  */
 
+import edu.iu.uits.lms.common.it12logging.LmsFilterSecurityInterceptorObjectPostProcessor;
+import edu.iu.uits.lms.common.it12logging.RestSecurityLoggingConfig;
 import edu.iu.uits.lms.common.oauth.CustomJwtAuthenticationConverter;
 import edu.iu.uits.lms.lti.service.LmsDefaultGrantedAuthoritiesMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +45,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;
 import uk.ac.ox.ctl.lti13.Lti13Configurer;
 
 import static edu.iu.uits.lms.lti.LTIConstants.BASE_USER_ROLE;
@@ -57,7 +60,9 @@ public class SecurityConfig {
 
         @Override
         public void configure(HttpSecurity http) throws Exception {
-            http.requestMatchers().antMatchers("/rest/**", "/api/**")
+            http
+                  .cors().and()
+                  .requestMatchers().antMatchers("/rest/**", "/api/**")
                   .and()
                   .authorizeRequests()
                   .antMatchers("/api/**").permitAll()
@@ -68,6 +73,8 @@ public class SecurityConfig {
                   .and()
                   .oauth2ResourceServer()
                   .jwt().jwtAuthenticationConverter(new CustomJwtAuthenticationConverter());
+
+            http.apply(new RestSecurityLoggingConfig());
         }
     }
 
@@ -85,7 +92,14 @@ public class SecurityConfig {
                   .and()
                   .authorizeRequests()
                   .antMatchers(WELL_KNOWN_ALL, "/app/accessDenied", "/error").permitAll()
-                  .antMatchers("/app/**").hasRole(BASE_USER_ROLE);
+                  .antMatchers("/app/**").hasRole(BASE_USER_ROLE)
+                  .withObjectPostProcessor(new LmsFilterSecurityInterceptorObjectPostProcessor())
+                  .and()
+                  .headers()
+                  .contentSecurityPolicy("style-src 'self'; form-action 'self'; frame-ancestors 'self' https://*.instructure.com")
+                  .and()
+                  .referrerPolicy(referrer -> referrer
+                          .policy(ReferrerPolicyHeaderWriter.ReferrerPolicy.SAME_ORIGIN));
 
             // Setup the LTI handshake
             Lti13Configurer lti13Configurer = new Lti13Configurer()
@@ -96,7 +110,14 @@ public class SecurityConfig {
             http.requestMatchers().antMatchers("/**")
                     .and()
                     .authorizeRequests()
-                    .anyRequest().authenticated();
+                    .anyRequest().authenticated()
+                    .withObjectPostProcessor(new LmsFilterSecurityInterceptorObjectPostProcessor())
+                    .and()
+                    .headers()
+                    .contentSecurityPolicy("style-src 'self'; form-action 'self'; frame-ancestors 'self' https://*.instructure.com")
+                    .and()
+                    .referrerPolicy(referrer -> referrer
+                            .policy(ReferrerPolicyHeaderWriter.ReferrerPolicy.SAME_ORIGIN));
 
             http.exceptionHandling().accessDeniedPage("/app/accessDenied");
         }
@@ -104,7 +125,7 @@ public class SecurityConfig {
         @Override
         public void configure(WebSecurity web) throws Exception {
             // ignore everything except paths specified
-            web.ignoring().antMatchers("/app/jsrivet/**", "/app/webjars/**", "/actuator/**", "/app/css/**",
+            web.ignoring().antMatchers("/app/jsrivet/**", "/app/webjars/**", "/app/css/**",
                   "/app/js/**", "/app/images/**", "/app/jsreact/**", "/favicon.ico");
         }
 

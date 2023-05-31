@@ -2,7 +2,7 @@
  * #%L
  * reports
  * %%
- * Copyright (C) 2015 - 2022 Indiana University
+ * Copyright (C) 2015 - 2023 Indiana University
  * %%
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
@@ -30,27 +30,23 @@
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
-import React, { Component } from 'react'
+// Get the scroll to top button:
+let mybutton = document.getElementById("scroll-to-top-button");
 
-import Report from 'components/Report'
+// When the user scrolls down 1px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
 
-const Reports = (props) => {
-    if (props.loading) {
-        return null
-    }
-    if (props.reports.length > 0) {
-        const reports = props.reports.map((reportModel) => (
-            <Report key={reportModel.id} report={reportModel} openModalMethod={props.openModalMethod}/>
-        ))
-
-      return (
-        <ol className="reportData">
-            {reports}
-        </ol>
-        );
+function scrollFunction() {
+    if (document.body.scrollTop > 1 || document.documentElement.scrollTop > 1) {
+        mybutton.style.display = "block";
     } else {
-      return <div className="rvt-m-top-lg">No available reports</div>;
+        mybutton.style.display = "none";
     }
-  }
+}
 
-export default Reports
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    document.getElementById("tool-title").focus();
+}

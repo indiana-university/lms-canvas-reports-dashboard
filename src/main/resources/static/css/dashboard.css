@@ -34,28 +34,23 @@
     display: inline-block;
     margin: 10px 15px 10px 0px;
     width: 252px;
-    height: 100%;
     vertical-align: top;
     font-size: 90%;
 }
 
-.dataView img {
-    width: 252px;
-    height: 189px;
-    max-width: 252px;
-    max-height: 189px;
-}
-
-.rvt-box--card {
+.card-attributes {
     box-shadow: 0 1px 3px 2px #ccc;
+    min-height: 415px;
 }
 
 ol.reportData {
     padding: 0;
 }
 
-.boxCardOverride {
-    min-height: 415px;
+.modalImage {
+    border-top-right-radius: .25rem;
+    border-top-left-radius: .25rem;
+    overflow: hidden;
 }
 
 .modalImageWidth {
@@ -63,8 +58,8 @@ ol.reportData {
 }
 
 /* override max width */
-.rvt-modal__inner {
-    max-width: 800px;
+.dialog-width-override {
+    max-width: 50rem;
 }
 
 .img-button {
@@ -74,4 +69,13 @@ ol.reportData {
 
 .external-link {
     padding-left: 0.2em;
+}
+
+#scroll-to-top-button {
+    display: none; /* Hidden by default */
+    position: fixed; /* Fixed/sticky position */
+    bottom: 20px; /* Place the button at the bottom of the page */
+    right: 30px; /* Place the button 30px from the right */
+    z-index: 99; /* Make sure it does not overlap */
+    cursor: pointer; /* Add a mouse pointer on hover */
 }

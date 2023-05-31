@@ -48,6 +48,8 @@ import edu.iu.uits.lms.lti.service.OidcTokenUtils;
 import edu.iu.uits.lms.reports.ReportConstants;
 import edu.iu.uits.lms.reports.ReportsException;
 import edu.iu.uits.lms.reports.handler.RosterStatusReportHandler;
+import edu.iu.uits.lms.reports.model.DecoratedReport;
+import edu.iu.uits.lms.reports.service.ReportsService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,10 +59,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ox.ctl.lti13.security.oauth2.client.lti.authentication.OidcAuthenticationToken;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Locale;
 
 @Controller
@@ -83,9 +85,12 @@ public class ReportsController extends OidcTokenAwareController {
     @Autowired
     private VariableReplacementService variableReplacementService = null;
 
+    @Autowired
+    private ReportsService reportsService = null;
+
     @RequestMapping(value = "/launch")
     @Secured(LTIConstants.BASE_USER_AUTHORITY)
-    public ModelAndView launch(Model model, HttpSession httpSession) {
+    public String launch(Model model, HttpSession httpSession) {
         OidcAuthenticationToken token = getTokenWithoutContext();
 
         OidcTokenUtils oidcTokenUtils = new OidcTokenUtils(token);
@@ -96,8 +101,10 @@ public class ReportsController extends OidcTokenAwareController {
         String pathIdentifier = reportCode == null ? "aggregator" : reportCode;
 
         courseSessionService.addAttributeToSession(httpSession, courseId, ReportConstants.VARIABLE_REPLACEMENT_DATA_KEY, setupMacroVariableReplacement(token));
+        model.addAttribute("hideFooter", true);
+        model.addAttribute("toolPath", "/app/" + courseId + "/" + pathIdentifier);
 
-        return new ModelAndView("redirect:/app/" + courseId + "/" + pathIdentifier);
+        return "loading";
     }
 
     @RequestMapping("/{courseId}/rosterStatus")
@@ -123,7 +130,7 @@ public class ReportsController extends OidcTokenAwareController {
         OidcAuthenticationToken token = getValidatedToken(courseId);
         OidcTokenUtils oidcTokenUtils = new OidcTokenUtils(token);
 
-        String[] roles = oidcTokenUtils.getRoles();
+        String[] roles = oidcTokenUtils.getAllRoles();
         String[] membershipRoles = StringUtils.split(oidcTokenUtils.getCustomValue("membership_role"), ",");
         String[] instructureMembershipRolesRaw = oidcTokenUtils.getCustomInstructureMembershipRolesRaw();
         String[] instructureMembershipRoles = oidcTokenUtils.getCustomInstructureMembershipRoles();
@@ -149,7 +156,8 @@ public class ReportsController extends OidcTokenAwareController {
 
         //For session tracking
         model.addAttribute("customId", httpSession.getId());
-        return "react";
+        model.addAttribute("reports", getReportsByRole(courseId, httpSession));
+        return "dashboardIndex";
     }
 
     @RequestMapping(value = "/accessDenied")
@@ -176,6 +184,18 @@ public class ReportsController extends OidcTokenAwareController {
         variableReplacementService.setupMapper(macroVariableMapper, roles);
 
         return macroVariableMapper;
+    }
+
+    // get the reports by role for the dashboard
+    private List<DecoratedReport> getReportsByRole(String courseId, HttpSession session) {
+        OidcAuthenticationToken token = getValidatedToken(courseId);
+        OidcTokenUtils oidcTokenUtils = new OidcTokenUtils(token);
+        String[] roles = oidcTokenUtils.getCustomInstructureMembershipRoles();
+        MacroVariableMapper mapper = courseSessionService.getAttributeFromSession(session, courseId, ReportConstants.VARIABLE_REPLACEMENT_DATA_KEY, MacroVariableMapper.class);
+
+        List<DecoratedReport> decoratedReports = reportsService.getReportsToDisplay(courseId, roles, mapper);
+
+        return decoratedReports;
     }
 
 

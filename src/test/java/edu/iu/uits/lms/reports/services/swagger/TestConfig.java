@@ -37,6 +37,7 @@ import edu.iu.uits.lms.iuonly.services.CanvasDataServiceImpl;
 import edu.iu.uits.lms.reports.WebApplication;
 import edu.iu.uits.lms.reports.config.SecurityConfig;
 import edu.iu.uits.lms.reports.repository.ReportListingRepository;
+import org.springframework.boot.context.metrics.buffering.BufferingApplicationStartup;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 
@@ -47,4 +48,7 @@ public class TestConfig {
 
     @MockBean
     private CanvasDataServiceImpl canvasDataService;
+
+    @MockBean
+    private BufferingApplicationStartup bufferingApplicationStartup;
 }
