@@ -10,7 +10,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.11</version>
+        <version>2.7.14</version>
         <relativePath /> <!-- lookup parent from repository -->
     </parent>
 
@@ -76,14 +76,14 @@
         <jdk.source>17</jdk.source>
         <jdk.target>17</jdk.target>
         <commons-collections4.version>4.4</commons-collections4.version>
-        <commons-io.version>2.11.0</commons-io.version>
-        <datatables-buttons.version>1.6.1</datatables-buttons.version>
+        <commons-io.version>2.13.0</commons-io.version>
+        <datatables-buttons.version>2.4.1</datatables-buttons.version>
         <datatables.version>1.10.24</datatables.version>
-        <font-awesome.version>4.7.0</font-awesome.version>
-        <jquery.version>3.6.4</jquery.version>
+        <font-awesome.version>6.4.0</font-awesome.version>
+        <jquery.version>3.7.0</jquery.version>
 
-        <lms-canvas-rivet.version>5.2.3.1_1</lms-canvas-rivet.version>
-        <lms-embedded-services.version>5.2.7</lms-embedded-services.version>
+        <lms-canvas-rivet.version>5.2.5.1</lms-canvas-rivet.version>
+        <lms-embedded-services.version>5.2.11</lms-embedded-services.version>
         <lms-team-spring-boot-it12>4.8</lms-team-spring-boot-it12>
 
         <plugins.compiler.version>3.11.0</plugins.compiler.version>
@@ -96,7 +96,7 @@
         <springdoc-openapi-ui.version>1.7.0</springdoc-openapi-ui.version>
         <spring-cloud-starter-parent.version>2021.0.7</spring-cloud-starter-parent.version>
         <spring-security-bom.version>5.5.2</spring-security-bom.version>
-        <webjars-locator.version>0.46</webjars-locator.version>
+        <webjars-locator.version>0.47</webjars-locator.version>
     </properties>
 
     <dependencyManagement>
