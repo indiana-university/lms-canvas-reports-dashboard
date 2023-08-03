@@ -83,18 +83,18 @@
         <jquery.version>3.7.0</jquery.version>
 
         <lms-canvas-rivet.version>5.2.5.1</lms-canvas-rivet.version>
-        <lms-embedded-services.version>5.2.11</lms-embedded-services.version>
+        <lms-embedded-services.version>5.2.12</lms-embedded-services.version>
         <lms-team-spring-boot-it12>4.8</lms-team-spring-boot-it12>
 
         <plugins.compiler.version>3.11.0</plugins.compiler.version>
-        <plugins.gpg.version>3.0.1</plugins.gpg.version>
+        <plugins.gpg.version>3.1.0</plugins.gpg.version>
         <plugins.javadoc.version>3.5.0</plugins.javadoc.version>
         <plugins.license.version>2.0.0</plugins.license.version>
         <plugins.nexus-staging.version>1.6.13</plugins.nexus-staging.version>
         <plugins.release.version>3.0.0</plugins.release.version>
-        <plugins.source.version>3.2.1</plugins.source.version>
+        <plugins.source.version>3.3.0</plugins.source.version>
         <springdoc-openapi-ui.version>1.7.0</springdoc-openapi-ui.version>
-        <spring-cloud-starter-parent.version>2021.0.7</spring-cloud-starter-parent.version>
+        <spring-cloud-starter-parent.version>2021.0.8</spring-cloud-starter-parent.version>
         <spring-security-bom.version>5.5.2</spring-security-bom.version>
         <webjars-locator.version>0.47</webjars-locator.version>
     </properties>
