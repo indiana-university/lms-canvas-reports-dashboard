@@ -42,13 +42,12 @@
     <link rel="stylesheet" type="text/css" th:href="@{/app/webjars/datatables/css/jquery.dataTables.min.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/app/webjars/datatables-buttons/css/buttons.dataTables.min.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/app/css/reports.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/app/webjars/font-awesome/css/font-awesome.min.css}"/>
 
 </head>
 <body>
 	<main role="main">
         <div class="errorClass" th:if="${error}">
-            <i class="fa fa-warning fa-lg"></i>
+            <svg fill="currentColor" width="16" height="16" viewBox="0 0 16 16" id="rvt-icon-caution-solid"><path d="M6.382 0h3.236L16 12.764V16H0v-3.236L6.382 0ZM7 6v4h2V6H7Zm1 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"></path></svg>
             <span th:text="${error}">Error text goes here</span>
         </div>
 	    <div layout:fragment="content">Page content goes here</div>

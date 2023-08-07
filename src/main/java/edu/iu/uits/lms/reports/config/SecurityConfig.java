@@ -91,7 +91,7 @@ public class SecurityConfig {
                   .requestMatchers().antMatchers(WELL_KNOWN_ALL, "/error", "/app/**")
                   .and()
                   .authorizeRequests()
-                  .antMatchers(WELL_KNOWN_ALL, "/app/accessDenied", "/error").permitAll()
+                  .antMatchers(WELL_KNOWN_ALL, "/error").permitAll()
                   .antMatchers("/app/**").hasRole(BASE_USER_ROLE)
                   .withObjectPostProcessor(new LmsFilterSecurityInterceptorObjectPostProcessor())
                   .and()
@@ -114,12 +114,10 @@ public class SecurityConfig {
                     .withObjectPostProcessor(new LmsFilterSecurityInterceptorObjectPostProcessor())
                     .and()
                     .headers()
-                    .contentSecurityPolicy("style-src 'self'; form-action 'self'; frame-ancestors 'self' https://*.instructure.com")
+                    .contentSecurityPolicy("style-src 'self' 'unsafe-inline'; form-action 'self'; frame-ancestors 'self' https://*.instructure.com")
                     .and()
                     .referrerPolicy(referrer -> referrer
                             .policy(ReferrerPolicyHeaderWriter.ReferrerPolicy.SAME_ORIGIN));
-
-            http.exceptionHandling().accessDeniedPage("/app/accessDenied");
         }
 
         @Override
