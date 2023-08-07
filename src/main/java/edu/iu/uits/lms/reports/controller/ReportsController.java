@@ -160,12 +160,6 @@ public class ReportsController extends OidcTokenAwareController {
         return "dashboardIndex";
     }
 
-    @RequestMapping(value = "/accessDenied")
-    public String accessDenied() {
-        return "accessDenied";
-    }
-
-
     protected MacroVariableMapper setupMacroVariableReplacement(OidcAuthenticationToken token) {
         OidcTokenUtils oidcTokenUtils = new OidcTokenUtils(token);
 

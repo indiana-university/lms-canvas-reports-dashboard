@@ -91,7 +91,7 @@ public class SecurityConfig {
                   .requestMatchers().antMatchers(WELL_KNOWN_ALL, "/error", "/app/**")
                   .and()
                   .authorizeRequests()
-                  .antMatchers(WELL_KNOWN_ALL, "/app/accessDenied", "/error").permitAll()
+                  .antMatchers(WELL_KNOWN_ALL, "/error").permitAll()
                   .antMatchers("/app/**").hasRole(BASE_USER_ROLE)
                   .withObjectPostProcessor(new LmsFilterSecurityInterceptorObjectPostProcessor())
                   .and()
@@ -118,8 +118,6 @@ public class SecurityConfig {
                     .and()
                     .referrerPolicy(referrer -> referrer
                             .policy(ReferrerPolicyHeaderWriter.ReferrerPolicy.SAME_ORIGIN));
-
-            http.exceptionHandling().accessDeniedPage("/app/accessDenied");
         }
 
         @Override
