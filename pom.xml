@@ -5,7 +5,7 @@
     <artifactId>reports</artifactId>
     <packaging>jar</packaging>
     <name>reports</name>
-    <version>0.99.3-SNAPSHOT</version>
+    <version>5.0.3-SNAPSHOT</version>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
