@@ -68,7 +68,7 @@
         <datatables.version>1.10.24</datatables.version>
         <jquery.version>3.7.0</jquery.version>
 
-        <lms-canvas-rivet.version>5.2.5.2_1</lms-canvas-rivet.version>
+        <lms-canvas-rivet.version>5.2.5.2_2</lms-canvas-rivet.version>
         <lms-embedded-services.version>5.2.12</lms-embedded-services.version>
         <lms-team-spring-boot-it12>4.8</lms-team-spring-boot-it12>
 
