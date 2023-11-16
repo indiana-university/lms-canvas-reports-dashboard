@@ -78,13 +78,10 @@
             </div>
         </li>
     </ol>
-    <button id="scroll-to-top-button" class="rvt-button rvt-button--secondary" onclick="topFunction();" title="Back to top">
-        <span class="rvt-m-right-xxs">Back to Top</span>
-        <rvt-icon name="arrow-up"></rvt-icon>
-    </button>
+    <scroll-to-top focusid="tool-title"></scroll-to-top>
 </div>
 <th:block layout:fragment="script">
-    <script type="text/javascript" th:src="@{/app/jsrivet/scrolltotop/scrolltotop.js}"></script>
+    <script type="text/javascript" defer th:src="@{/app/jsrivet/scrolltotop/scrolltotop.js}"></script>
 </th:block>
 </body>
 </html>
