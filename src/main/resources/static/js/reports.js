@@ -59,6 +59,7 @@ reports.applyAccessibilityOverrides = function() {
     $('th.sorting, th.sorting_desc, th.sorting_asc').keypress(function(e) {
     	if (e.which == 13) {
     		reports.refreshPager();
+    		reports.sortingNotify($(this));
     	}
     });
     
@@ -75,6 +76,16 @@ reports.applyAccessibilityOverrides = function() {
     		reports.refreshPager();
     	}, 200);  
     });
+
+    $("th.sorting").click(function() {
+        reports.sortingNotify($(this));
+    });
+}
+
+reports.sortingNotify = function (sortHeader) {
+    var sortBy = sortHeader.text();
+    var direction = sortHeader.hasClass("sorting_asc") ? "ascending" : "descending";
+    $("#sortingAnnc").text("Sorting by " + sortBy + " " + direction);
 }
 
 
@@ -83,7 +94,7 @@ reports.refreshPager = function() {
 	$('a.paginate_button').attr('role', 'button'); // add the button role back in
 }
 
-reports.pagerLabels = function() { 
+reports.pagerLabels = function() {
 	
 	// Add aria-labels to the page numbers in the pager since DataTables does not let us customize this
 	$('a.paginate_button').each(function() {
@@ -106,7 +117,7 @@ reports.pagerLabels = function() {
 
 reports.addDescriptiveLabels = function () {
 	$('#reportTable_filter').find('input[type=search]').attr('aria-describedby','searchText');
-	//$('#reportTable_length').find('select[name=reportTable_length]').attr('aria-describedby','numEntriesText');
+	$('#reportTable_length').find('select[name=reportTable_length]').attr('aria-describedby','numEntriesText');
 }
 
 reports.addButtonRole = function() {

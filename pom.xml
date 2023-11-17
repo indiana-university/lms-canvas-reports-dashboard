@@ -65,7 +65,7 @@
         <commons-collections4.version>4.4</commons-collections4.version>
         <commons-io.version>2.13.0</commons-io.version>
         <datatables-buttons.version>2.4.1</datatables-buttons.version>
-        <datatables.version>1.10.24</datatables.version>
+        <datatables.version>1.13.5</datatables.version>
         <jquery.version>3.7.0</jquery.version>
 
         <lms-canvas-rivet.version>5.2.5.2_2</lms-canvas-rivet.version>

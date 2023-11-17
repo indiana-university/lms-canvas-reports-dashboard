@@ -36,22 +36,14 @@ body {
 
 /* Show X entries */
 #reportTable_length {
-    float: right;
-    position: relative;
-    right: 50px;
+    margin-left: 1em;
+    padding: 5px;
 }
 
-th.sorting_asc {
-    background-image: url("../images/datatables_sort_ascending.png") !important;
+#reportTable_filter {
+    padding: 5px;
 }
 
-th.sorting_desc {
-    background-image: url("../images/datatables_sort_descending.png") !important;
-}
-
-.hidden {
-	display: none;
-}
 
 .errorClass {
     color: #800006;
@@ -60,4 +52,17 @@ th.sorting_desc {
     padding: 1.3em;
     border-radius: 6px;
     display: flex;
+}
+
+.sr-only {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+    background-color: #fff !important;
+    color: #000 !important
 }

@@ -52,26 +52,11 @@
                     <div th:replace="fragments :: page-dialog(${reportModel.id}, ${reportModel.title}, ${reportModel.image})"></div>
                 </div>
                 <div class="rvt-p-all-sm">
-                    <h2 class="rvt-ts-18 rvt-text-bold">
-                        <a th:href="${reportModel.url}" class="rvt-link-bold" th:target="${reportModel.newWindow ? '_blank' : ''}">
-                            <span th:text="${reportModel.title}"></span>
-                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 16 16" class="external-link">
-                                <g fill="currentColor">
-                                    <path d="M10.75,15H2.25A1.25,1.25,0,0,1,1,13.75V5.25A1.25,1.25,0,0,1,2.25,4H6A1,1,0,0,1,6,6H3v7h7V10a1,1,0,0,1,2,0v3.75A1.25,1.25,0,0,1,10.75,15Z"/>
-                                    <path d="M14.71,1.29A1,1,0,0,0,13.87,1l-.12,0H9A1,1,0,0,0,9,3h2.59L7.29,7.29A1,1,0,1,0,8.71,8.71L13,4.41V7a1,1,0,0,0,2,0V2.25a1.17,1.17,0,0,0,0-.12A1,1,0,0,0,14.71,1.29Z"/>
-                                </g>
-                            </svg>
-                            <span class="rvt-sr-only">(Opens in new window)</span>
-                        </a>
-                    </h2>
+                    <h2 class="rvt-ts-18 rvt-text-bold" th:text="${reportModel.title}"></h2>
                     <p class="rvt-m-top-xxs">
                         <span th:text="${reportModel.description}"></span>
-                    </p>
-
-                    <div>
-                        <a th:if="${reportModel.kbUrl != null}" th:href="${reportModel.kbUrl}" target='_blank'>
-                            <span th:text="|Learn more about ${reportModel.title}|"></span>
-                            <span class="rvt-sr-only">(Opens in new window)</span>
+                        <a th:if="${reportModel.kbUrl != null}" th:href="${reportModel.kbUrl}" target='_blank'>Learn More
+                            <span class="rvt-sr-only" th:text="| about ${reportModel.title} (Opens in new window)|"></span>
                             <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 16 16" class="external-link">
                                 <g fill="currentColor">
                                     <path d="M10.75,15H2.25A1.25,1.25,0,0,1,1,13.75V5.25A1.25,1.25,0,0,1,2.25,4H6A1,1,0,0,1,6,6H3v7h7V10a1,1,0,0,1,2,0v3.75A1.25,1.25,0,0,1,10.75,15Z"/>
@@ -79,7 +64,16 @@
                                 </g>
                             </svg>
                         </a>
-                    </div>
+                    </p>
+                    <a th:href="${reportModel.url}" class="rvt-link-bold" th:target="${reportModel.newWindow ? '_blank' : ''}">Open Report
+                        <span class="rvt-sr-only" th:text="|${reportModel.title} (Opens in new window)|"></span>
+                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 16 16" class="external-link">
+                            <g fill="currentColor">
+                                <path d="M10.75,15H2.25A1.25,1.25,0,0,1,1,13.75V5.25A1.25,1.25,0,0,1,2.25,4H6A1,1,0,0,1,6,6H3v7h7V10a1,1,0,0,1,2,0v3.75A1.25,1.25,0,0,1,10.75,15Z"/>
+                                <path d="M14.71,1.29A1,1,0,0,0,13.87,1l-.12,0H9A1,1,0,0,0,9,3h2.59L7.29,7.29A1,1,0,1,0,8.71,8.71L13,4.41V7a1,1,0,0,0,2,0V2.25a1.17,1.17,0,0,0,0-.12A1,1,0,0,0,14.71,1.29Z"/>
+                            </g>
+                        </svg>
+                    </a>
                 </div>
             </div>
         </li>
