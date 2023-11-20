@@ -37,10 +37,9 @@ body {
 /* Show X entries */
 #reportTable_length {
     margin-left: 1em;
-    padding: 5px;
 }
 
-#reportTable_filter {
+#reportTable_filter, #reportTable_length {
     padding: 5px;
 }
 
