@@ -41,6 +41,10 @@ reports.applyAccessibilityOverrides = function() {
     
     // add more descriptive labels to the form elements with implicit labels
     reports.addDescriptiveLabels();
+
+    // DataTables incorrectly uses aria-label for header instructions, which causes these instructions to be read
+    // for every single data cell. Replace the aria-label tag with aria-description
+    reports.fixTableHeaders();
     
     // There are several actions that the user may take that will wipe out our customizations for the pager. These
     // should re-add our customizations for the various actions.
@@ -86,6 +90,7 @@ reports.sortingNotify = function (sortHeader) {
     var sortBy = sortHeader.text();
     var direction = sortHeader.hasClass("sorting_asc") ? "ascending" : "descending";
     $("#sortingAnnc").text("Sorting by " + sortBy + " " + direction);
+    reports.fixTableHeaders();
 }
 
 
@@ -123,4 +128,12 @@ reports.addDescriptiveLabels = function () {
 reports.addButtonRole = function() {
 	$('a.dt-button').attr('role', 'button');
 	$('a.paginate_button').attr('role', 'button');
+}
+
+reports.fixTableHeaders = function() {
+    $("th.sorting").each( function() {
+        var label = $(this).attr("aria-label");
+        $(this).attr("aria-description", label);
+        $(this).removeAttr("aria-label");
+    });
 }
