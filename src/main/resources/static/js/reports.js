@@ -41,6 +41,10 @@ reports.applyAccessibilityOverrides = function() {
     
     // add more descriptive labels to the form elements with implicit labels
     reports.addDescriptiveLabels();
+
+    // DataTables incorrectly uses aria-label for header instructions, which causes these instructions to be read
+    // for every single data cell. Replace the aria-label tag with aria-description
+    reports.fixTableHeaders();
     
     // There are several actions that the user may take that will wipe out our customizations for the pager. These
     // should re-add our customizations for the various actions.
@@ -59,6 +63,7 @@ reports.applyAccessibilityOverrides = function() {
     $('th.sorting, th.sorting_desc, th.sorting_asc').keypress(function(e) {
     	if (e.which == 13) {
     		reports.refreshPager();
+    		reports.sortingNotify($(this));
     	}
     });
     
@@ -75,6 +80,17 @@ reports.applyAccessibilityOverrides = function() {
     		reports.refreshPager();
     	}, 200);  
     });
+
+    $("th.sorting").click(function() {
+        reports.sortingNotify($(this));
+    });
+}
+
+reports.sortingNotify = function (sortHeader) {
+    var sortBy = sortHeader.text();
+    var direction = sortHeader.hasClass("sorting_asc") ? "ascending" : "descending";
+    $("#sortingAnnc").text("Sorting by " + sortBy + " " + direction);
+    reports.fixTableHeaders();
 }
 
 
@@ -83,7 +99,7 @@ reports.refreshPager = function() {
 	$('a.paginate_button').attr('role', 'button'); // add the button role back in
 }
 
-reports.pagerLabels = function() { 
+reports.pagerLabels = function() {
 	
 	// Add aria-labels to the page numbers in the pager since DataTables does not let us customize this
 	$('a.paginate_button').each(function() {
@@ -106,10 +122,18 @@ reports.pagerLabels = function() {
 
 reports.addDescriptiveLabels = function () {
 	$('#reportTable_filter').find('input[type=search]').attr('aria-describedby','searchText');
-	//$('#reportTable_length').find('select[name=reportTable_length]').attr('aria-describedby','numEntriesText');
+	$('#reportTable_length').find('select[name=reportTable_length]').attr('aria-describedby','numEntriesText');
 }
 
 reports.addButtonRole = function() {
 	$('a.dt-button').attr('role', 'button');
 	$('a.paginate_button').attr('role', 'button');
+}
+
+reports.fixTableHeaders = function() {
+    $("th.sorting").each( function() {
+        var label = $(this).attr("aria-label");
+        $(this).attr("aria-description", label);
+        $(this).removeAttr("aria-label");
+    });
 }

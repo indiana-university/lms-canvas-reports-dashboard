@@ -46,8 +46,9 @@
         <div id="buttonContainer"></div>
         
         <!-- add descriptive text to these inputs for users with screenreaders - not displayed on screen -->
-        <span id="searchText" class="hidden">Search for data within the report</span> 
-        <span id="numEntriesText" class="hidden">Select the number of rows to be displayed in the report</span>
+        <span id="searchText" hidden>Search for data within the report</span>
+        <span id="numEntriesText" hidden>Select the number of rows to be displayed in the report</span>
+        <span id="sortingAnnc" class="sr-only" aria-live="polite"></span>
         
         <table id="reportTable" class="display nowrap" th:summary="#{rosterStatus.report.summary}">
             <thead>
@@ -74,16 +75,14 @@
     <!--
         $(document).ready(function() {
             $('#reportTable').DataTable( {
-                "dom": 'Bflrtip',
+                "dom": 'Blfrtip',
                 "buttons": [{ extend: 'csv', text: 'Download CSV File' }],
-                "iDisplayLength": -1,
+                "pageLength": -1,
                 "language": {
-                   "aria": {
-                      "paginate": {
-                          "previous":'Previous page', "next": 'Next page'
-                       }
+                    "paginate": {
+                        "previous":'Previous page', "next": 'Next page'
                     },
-                    "lengthMenu": 
+                    "lengthMenu":
                         'Show <select name="reportTable_length" aria-controls="reportTable" aria-describedby="numEntriesText">'+
                         '<option value="10">10</option>'+
                         '<option value="25">25</option>'+
@@ -91,7 +90,7 @@
                         '<option value="100">100</option>'+
                         '<option value="-1">All</option>'+
                         '</select> entries'
-                 } 
+                 }
             });
             
             reports.applyAccessibilityOverrides();
