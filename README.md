@@ -1,16 +1,25 @@
 # lms-canvas-reports-dashboard
 LTI tool which displays a dashboard of customizable reports
 
+## Building with custom variable replacement service
+The default implementation does basic variable replacements with information gathered from LTI launch details.
+Anything beyond that needs to be done with a custom implementation.  
+Build the tool, while enabling a custom variable replacement service:
+```
+mvn clean install -P var-repl-ser -Dvariable-replacement-service.groupId=edu.iu.uits.lms -Dvariable-replacement-service.artifactId=lms-iu-variable-replacement-service -Dvariable-replacement-service.version=5.0.2
+```
+
 ## Running standalone
 Add env vars or system properties as desired.
 
-| ENV Property                           | System Property                        | Default Value             | Description                                                                                                    |
-|----------------------------------------|----------------------------------------|---------------------------|----------------------------------------------------------------------------------------------------------------|
-| `APP_FULLFILEPATH`                     | `app.fullFilePath`                     | `/usr/src/app/config`     | Directory for configuration files                                                                              |
-| `APP_OVERRIDESFILENAME`                | `app.overridesFileName`                | `overrides.properties`    | Customizable filename for additional configurations.  Would be located in the above directory.                 |
-| `SPRING_PROFILES_ACTIVE`               | `spring.profiles.active`               |                           | Supply spring profiles to activate.  See configuration details below for potential values.                     |
-| `APP_ENV`                              | `app.env`                              | `dev`                     | Environment designator.  Free-form and can be used for your own purposes.  Shows up in the application footer. |
-| `LTI_CLIENTREGISTRATION_DEFAULTCLIENT` | `lti.clientregistration.defaultClient` | canvas                    | Specify the launching configuration to expect (canvas/saltire)                                                 |
+| ENV Property                           | System Property                        | Default Value          | Description                                                                                                    |
+|----------------------------------------|----------------------------------------|------------------------|----------------------------------------------------------------------------------------------------------------|
+| `APP_FULLFILEPATH`                     | `app.fullFilePath`                     | `/usr/src/app/config`  | Directory for configuration files                                                                              |
+| `APP_OVERRIDESFILENAME`                | `app.overridesFileName`                | `overrides.properties` | Customizable filename for additional configurations.  Would be located in the above directory.                 |
+| `SPRING_PROFILES_ACTIVE`               | `spring.profiles.active`               |                        | Supply spring profiles to activate.  See configuration details below for potential values.                     |
+| `APP_ENV`                              | `app.env`                              | `dev`                  | Environment designator.  Free-form and can be used for your own purposes.  Shows up in the application footer. |
+| `LTI_CLIENTREGISTRATION_DEFAULTCLIENT` | `lti.clientregistration.defaultClient` | canvas                 | Specify the launching configuration to expect (canvas/saltire)                                                 |
+| `APP_CUSTOMSERVICEPACKAGE`             | `app.customServicePackage`             |                        | Specify the package where the variable replacement service config is located                                   |
 
 ## Setup Database
 After compiling, see `target/generated-resources/sql/ddl/auto/postgresql9.sql` for appropriate ddl.
@@ -138,3 +147,19 @@ that need to be accounted for while using this setup.
 
 This is marked as experimental due to the fact that we aren't running with this option at IU.  We are running into CORS
 issues when trying to talk to our OAuth2 service via swagger, so we can't verify if it really works or not!
+
+## Using variables in the report URLs
+Variables can be used in report URLs which the system will replace with appropriate values.  
+Supported variables in the default implementation:
+- ${USER_ID}
+- ${USER_EID}
+- ${USER_FIRST_NAME}
+- ${USER_LAST_NAME}
+- ${USER_ROLE}
+- ${CANVAS_COURSE_ID}
+
+Variables requiring a custom implementation:
+- ${SIS_COURSE_ID}
+- ${CLASS_NBR}
+- ${SIS_TERM_ID}
+- ${SIS_CAMPUS}

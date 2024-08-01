@@ -78,6 +78,11 @@
         <spring-cloud-starter-parent.version>2021.0.9</spring-cloud-starter-parent.version>
         <spring-security-bom.version>5.5.2</spring-security-bom.version>
         <webjars-locator.version>0.50</webjars-locator.version>
+
+        <!-- These 3 props can be overridden at compile time if they are being customized-->
+        <variable-replacement-service.groupId>edu.iu.uits.lms</variable-replacement-service.groupId>
+        <variable-replacement-service.artifactId>lms-iu-variable-replacement-service</variable-replacement-service.artifactId>
+        <variable-replacement-service.version>${lms-embedded-services.version}</variable-replacement-service.version>
     </properties>
 
     <dependencyManagement>
@@ -142,12 +147,6 @@
             <groupId>edu.iu.uits.lms</groupId>
             <artifactId>lms-canvas-redis-config</artifactId>
             <version>${lms-embedded-services.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>edu.iu.uits.lms</groupId>
-            <artifactId>lms-iu-variable-replacement-service</artifactId>
-            <version>${lms-embedded-services.version}</version>
-            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -351,6 +350,17 @@
     </build>
 
     <profiles>
+        <profile>
+            <id>var-repl-ser</id>
+            <dependencies>
+                <dependency>
+                    <groupId>${variable-replacement-service.groupId}</groupId>
+                    <artifactId>${variable-replacement-service.artifactId}</artifactId>
+                    <version>${variable-replacement-service.version}</version>
+                    <optional>true</optional>
+                </dependency>
+            </dependencies>
+        </profile>
         <profile>
             <id>denodo</id>
             <dependencies>
