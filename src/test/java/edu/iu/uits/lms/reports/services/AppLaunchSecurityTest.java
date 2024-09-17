@@ -42,7 +42,6 @@ import edu.iu.uits.lms.lti.config.TestUtils;
 import edu.iu.uits.lms.lti.controller.InvalidTokenContextException;
 import edu.iu.uits.lms.lti.service.LmsDefaultGrantedAuthoritiesMapper;
 import edu.iu.uits.lms.reports.config.SecurityConfig;
-import edu.iu.uits.lms.reports.config.ToolConfig;
 import edu.iu.uits.lms.reports.controller.ReportsController;
 import edu.iu.uits.lms.reports.handler.RosterStatusReportHandler;
 import edu.iu.uits.lms.reports.service.ReportsService;
@@ -52,7 +51,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -67,7 +65,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(value = ReportsController.class, properties = {"oauth.tokenprovider.url=http://foo"})
-@Import(ToolConfig.class)
 @ContextConfiguration(classes = {ReportsController.class, SecurityConfig.class})
 @ActiveProfiles("none")
 public class AppLaunchSecurityTest {

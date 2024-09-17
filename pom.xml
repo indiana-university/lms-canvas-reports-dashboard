@@ -116,18 +116,6 @@
         </dependency>
         <dependency>
             <groupId>edu.iu.uits.lms</groupId>
-            <artifactId>lms-email-service</artifactId>
-            <version>${lms-embedded-services.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>edu.iu.uits.lms</groupId>
-            <artifactId>lms-email-service</artifactId>
-            <version>${lms-embedded-services.version}</version>
-            <type>test-jar</type>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>edu.iu.uits.lms</groupId>
             <artifactId>lms-canvas-iu-custom-services</artifactId>
             <version>${lms-embedded-services.version}</version>
         </dependency>

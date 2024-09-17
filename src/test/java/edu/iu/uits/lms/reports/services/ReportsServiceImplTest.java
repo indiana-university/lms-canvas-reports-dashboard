@@ -37,7 +37,6 @@ import edu.iu.uits.lms.canvas.model.Course;
 import edu.iu.uits.lms.canvas.services.CourseService;
 import edu.iu.uits.lms.common.variablereplacement.VariableReplacementService;
 import edu.iu.uits.lms.reports.config.PostgresDBConfig;
-import edu.iu.uits.lms.reports.config.ToolConfig;
 import edu.iu.uits.lms.reports.model.DecoratedReport;
 import edu.iu.uits.lms.reports.repository.ReportListingRepository;
 import edu.iu.uits.lms.reports.service.ReportsService;
@@ -51,7 +50,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Import;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -60,7 +58,6 @@ import org.springframework.test.context.jdbc.Sql;
 import java.util.List;
 
 @DataJpaTest
-//@Import({ToolConfig.class, PostgresDBConfig.class})
 @ContextConfiguration(classes = {ReportsService.class, PostgresDBConfig.class})
 @Sql("/reports.sql")
 @Slf4j

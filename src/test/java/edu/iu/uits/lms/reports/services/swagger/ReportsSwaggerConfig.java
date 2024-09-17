@@ -1,6 +1,5 @@
 package edu.iu.uits.lms.reports.services.swagger;
 
-import edu.iu.uits.lms.email.config.EmailRestConfiguration;
 import edu.iu.uits.lms.iuonly.config.IuCustomRestConfiguration;
 import edu.iu.uits.lms.lti.config.LtiRestConfiguration;
 import edu.iu.uits.lms.lti.service.LmsDefaultGrantedAuthoritiesMapper;
@@ -17,7 +16,6 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import java.util.ArrayList;
 import java.util.List;
 
-import static edu.iu.uits.lms.email.EmailConstants.EMAIL_GROUP_CODE_PATH;
 import static edu.iu.uits.lms.iuonly.IuCustomConstants.IUCUSTOM_GROUP_CODE_PATH;
 
 @Configuration
@@ -27,9 +25,7 @@ import static edu.iu.uits.lms.iuonly.IuCustomConstants.IUCUSTOM_GROUP_CODE_PATH;
         edu.iu.uits.lms.lti.config.SwaggerConfig.class,
         LtiRestConfiguration.class,
         edu.iu.uits.lms.iuonly.config.SwaggerConfig.class,
-        IuCustomRestConfiguration.class,
-        edu.iu.uits.lms.email.config.SwaggerConfig.class,
-        EmailRestConfiguration.class
+        IuCustomRestConfiguration.class
 })
 
 public class ReportsSwaggerConfig {
@@ -49,7 +45,6 @@ public class ReportsSwaggerConfig {
 
         List<String> expandedList = new ArrayList<>();
         expandedList.add(IUCUSTOM_GROUP_CODE_PATH);
-        expandedList.add(EMAIL_GROUP_CODE_PATH);
 
         stb.setEmbeddedSwaggerToolPaths(expandedList);
         return stb;

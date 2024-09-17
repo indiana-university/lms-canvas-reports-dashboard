@@ -9,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.NestedTestConfiguration;
 
-import static edu.iu.uits.lms.email.EmailConstants.EMAILREST_PROFILE;
 import static edu.iu.uits.lms.iuonly.IuCustomConstants.IUCUSTOMREST_PROFILE;
 import static org.springframework.test.context.NestedTestConfiguration.EnclosingConfiguration.INHERIT;
 
@@ -31,7 +30,7 @@ public class SwaggerSuiteTest {
 
     @Nested
     @SpringBootTest(classes = {ReportsSwaggerConfig.class})
-    @ActiveProfiles({IUCUSTOMREST_PROFILE, EMAILREST_PROFILE})
+    @ActiveProfiles({IUCUSTOMREST_PROFILE})
     public class SwaggerEmbeddedToolTest extends AbstractSwaggerEmbeddedToolTest {
 
     }
