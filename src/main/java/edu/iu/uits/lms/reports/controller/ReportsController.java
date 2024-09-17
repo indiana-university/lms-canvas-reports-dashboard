@@ -50,6 +50,7 @@ import edu.iu.uits.lms.reports.ReportsException;
 import edu.iu.uits.lms.reports.handler.RosterStatusReportHandler;
 import edu.iu.uits.lms.reports.model.DecoratedReport;
 import edu.iu.uits.lms.reports.service.ReportsService;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +62,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ox.ctl.lti13.security.oauth2.client.lti.authentication.OidcAuthenticationToken;
 
-import javax.servlet.http.HttpSession;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Locale;
 
@@ -89,7 +90,7 @@ public class ReportsController extends OidcTokenAwareController {
     private ReportsService reportsService = null;
 
     @RequestMapping(value = "/launch")
-    @Secured(LTIConstants.BASE_USER_AUTHORITY)
+    @Secured(LTIConstants.BASE_USER_ROLE)
     public String launch(Model model, HttpSession httpSession) {
         OidcAuthenticationToken token = getTokenWithoutContext();
 
@@ -125,12 +126,17 @@ public class ReportsController extends OidcTokenAwareController {
     }
 
     @RequestMapping("/{courseId}/roleInspector")
-    @Secured(LTIConstants.BASE_USER_AUTHORITY)
+    @Secured(LTIConstants.BASE_USER_ROLE)
     public String roleInspector(@PathVariable("courseId") String courseId, Model model) {
         OidcAuthenticationToken token = getValidatedToken(courseId);
         OidcTokenUtils oidcTokenUtils = new OidcTokenUtils(token);
 
-        String[] roles = oidcTokenUtils.getAllRoles();
+        String[] roles = null;
+        try {
+            roles = oidcTokenUtils.getAllRoles();
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
         String[] membershipRoles = StringUtils.split(oidcTokenUtils.getCustomValue("membership_role"), ",");
         String[] instructureMembershipRolesRaw = oidcTokenUtils.getCustomInstructureMembershipRolesRaw();
         String[] instructureMembershipRoles = oidcTokenUtils.getCustomInstructureMembershipRoles();
@@ -149,7 +155,7 @@ public class ReportsController extends OidcTokenAwareController {
 
 
     @RequestMapping(value = "/{courseId}/aggregator")
-    @Secured(LTIConstants.BASE_USER_AUTHORITY)
+    @Secured(LTIConstants.BASE_USER_ROLE)
     public String index(@PathVariable("courseId") String courseId, Model model, HttpSession httpSession) {
         OidcAuthenticationToken token = getValidatedToken(courseId);
         model.addAttribute("courseId", courseId);
