@@ -75,21 +75,25 @@
     <!--
         $(document).ready(function() {
             $('#reportTable').DataTable( {
-                "dom": 'Blfrtip',
-                "buttons": [{ extend: 'csv', text: 'Download CSV File' }],
-                "pageLength": -1,
-                "language": {
-                    "paginate": {
-                        "previous":'Previous page', "next": 'Next page'
-                    },
-                    "lengthMenu":
-                        'Show <select name="reportTable_length" aria-controls="reportTable" aria-describedby="numEntriesText">'+
-                        '<option value="10">10</option>'+
-                        '<option value="25">25</option>'+
-                        '<option value="50">50</option>'+
-                        '<option value="100">100</option>'+
-                        '<option value="-1">All</option>'+
-                        '</select> entries'
+                layout: {
+                    topStart: {
+                        buttons: [
+                            {
+                                extend: 'csv',
+                                text: 'Download CSV File'
+                            }
+                        ],
+                        pageLength: {
+                            menu: [10, 25, 50, 100, { label: 'All', value: -1 }]
+                        }
+                    }
+                },
+                pageLength: -1,
+                language: {
+                    paginate: {
+                        previous: 'Previous page',
+                        next: 'Next page'
+                    }
                  }
             });
             

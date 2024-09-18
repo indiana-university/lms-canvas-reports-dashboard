@@ -67,8 +67,8 @@
         <datatables.version>2.1.0</datatables.version>
         <jquery.version>3.7.1</jquery.version>
 
-        <lms-canvas-rivet.version>6.2.8.1</lms-canvas-rivet.version>
-        <lms-embedded-services.version>6.0.0</lms-embedded-services.version>
+        <lms-canvas-rivet.version>6.2.8.1_1</lms-canvas-rivet.version>
+        <lms-embedded-services.version>6.0.0.1-RC1</lms-embedded-services.version>
         <lms-team-spring-boot-it12>6.5.0</lms-team-spring-boot-it12>
 
         <plugins.compiler.version>3.13.0</plugins.compiler.version>
@@ -172,6 +172,10 @@
         <dependency>
             <groupId>nz.net.ultraq.thymeleaf</groupId>
             <artifactId>thymeleaf-layout-dialect</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-data-redis</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
