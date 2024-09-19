@@ -56,7 +56,7 @@ public class ToolController extends OidcTokenAwareController {
    private ToolConfig toolConfig = null;
 
    @RequestMapping("/index/{courseId}")
-   @Secured(LTIConstants.BASE_USER_ROLE)
+   @Secured(LTIConstants.BASE_USER_AUTHORITY)
    public ModelAndView index(@PathVariable("courseId") String courseId, Model model, HttpServletRequest request) {
       log.debug("in /index");
       OidcAuthenticationToken token = getValidatedToken(courseId);

@@ -90,7 +90,7 @@ public class ReportsController extends OidcTokenAwareController {
     private ReportsService reportsService = null;
 
     @RequestMapping(value = "/launch")
-    @Secured(LTIConstants.BASE_USER_ROLE)
+    @Secured(LTIConstants.BASE_USER_AUTHORITY)
     public String launch(Model model, HttpSession httpSession) {
         OidcAuthenticationToken token = getTokenWithoutContext();
 
@@ -126,7 +126,7 @@ public class ReportsController extends OidcTokenAwareController {
     }
 
     @RequestMapping("/{courseId}/roleInspector")
-    @Secured(LTIConstants.BASE_USER_ROLE)
+    @Secured(LTIConstants.BASE_USER_AUTHORITY)
     public String roleInspector(@PathVariable("courseId") String courseId, Model model) {
         OidcAuthenticationToken token = getValidatedToken(courseId);
         OidcTokenUtils oidcTokenUtils = new OidcTokenUtils(token);
@@ -155,7 +155,7 @@ public class ReportsController extends OidcTokenAwareController {
 
 
     @RequestMapping(value = "/{courseId}/aggregator")
-    @Secured(LTIConstants.BASE_USER_ROLE)
+    @Secured(LTIConstants.BASE_USER_AUTHORITY)
     public String index(@PathVariable("courseId") String courseId, Model model, HttpSession httpSession) {
         OidcAuthenticationToken token = getValidatedToken(courseId);
         model.addAttribute("courseId", courseId);
