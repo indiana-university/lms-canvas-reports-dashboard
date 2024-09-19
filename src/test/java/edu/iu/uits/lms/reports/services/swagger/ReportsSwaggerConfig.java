@@ -4,7 +4,7 @@ package edu.iu.uits.lms.reports.services.swagger;
  * #%L
  * reports
  * %%
- * Copyright (C) 2015 - 2022 Indiana University
+ * Copyright (C) 2015 - 2024 Indiana University
  * %%
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
@@ -33,22 +33,54 @@ package edu.iu.uits.lms.reports.services.swagger;
  * #L%
  */
 
-import edu.iu.uits.lms.iuonly.services.CanvasDataServiceImpl;
-import edu.iu.uits.lms.reports.WebApplication;
+import edu.iu.uits.lms.iuonly.config.IuCustomRestConfiguration;
+import edu.iu.uits.lms.lti.config.LtiRestConfiguration;
+import edu.iu.uits.lms.lti.service.LmsDefaultGrantedAuthoritiesMapper;
+import edu.iu.uits.lms.lti.swagger.SwaggerTestingBean;
 import edu.iu.uits.lms.reports.config.SecurityConfig;
-import edu.iu.uits.lms.reports.repository.ReportListingRepository;
+import edu.iu.uits.lms.reports.config.SwaggerConfig;
 import org.springframework.boot.context.metrics.buffering.BufferingApplicationStartup;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 
-@Import({WebApplication.class, SecurityConfig.class})
-public class TestConfig {
-    @MockBean
-    private ReportListingRepository reportListingRepository;
+import java.util.ArrayList;
+import java.util.List;
 
-    @MockBean
-    private CanvasDataServiceImpl canvasDataService;
+import static edu.iu.uits.lms.iuonly.IuCustomConstants.IUCUSTOM_GROUP_CODE_PATH;
+
+@Configuration
+@Import({
+        SecurityConfig.class,
+        SwaggerConfig.class,
+        edu.iu.uits.lms.lti.config.SwaggerConfig.class,
+        LtiRestConfiguration.class,
+        edu.iu.uits.lms.iuonly.config.SwaggerConfig.class,
+        IuCustomRestConfiguration.class
+})
+
+public class ReportsSwaggerConfig {
 
     @MockBean
     private BufferingApplicationStartup bufferingApplicationStartup;
+
+    @MockBean
+    LmsDefaultGrantedAuthoritiesMapper lmsDefaultGrantedAuthoritiesMapper;
+
+    @MockBean
+    private ClientRegistrationRepository clientRegistrationRepository;
+
+    @Bean
+    public SwaggerTestingBean swaggerTestingBean() {
+        SwaggerTestingBean stb = new SwaggerTestingBean();
+
+        List<String> expandedList = new ArrayList<>();
+        expandedList.add(IUCUSTOM_GROUP_CODE_PATH);
+
+        stb.setEmbeddedSwaggerToolPaths(expandedList);
+        return stb;
+    }
+
 }
