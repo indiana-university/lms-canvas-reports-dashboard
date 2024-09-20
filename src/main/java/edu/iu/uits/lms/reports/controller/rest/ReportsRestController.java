@@ -40,6 +40,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,7 +49,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -123,10 +124,10 @@ public class ReportsRestController {
       return ResponseEntity.ok(reportListingRepository.save(updated));
    }
 
-   @PostMapping(value = "/{id}/images")
+   @PostMapping(value = "/{id}/images", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
    @Operation(summary = "Update the images of an existing ReportListing by id")
-   public ResponseEntity updateImages(@PathVariable Long id, @RequestParam(value = "reportImage", required = false) MultipartFile reportImage,
-                                      @RequestParam(value = "thumbnail", required = false) MultipartFile thumbnail) {
+   public ResponseEntity updateImages(@PathVariable Long id, @RequestPart(name = "reportImage", required = false) MultipartFile reportImage,
+                                      @RequestPart(name = "thumbnail", required = false) MultipartFile thumbnail) {
       ReportListing updated = reportListingRepository.findById(id).orElse(null);
 
       if (reportImage != null) {
