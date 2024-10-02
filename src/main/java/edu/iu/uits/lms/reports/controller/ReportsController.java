@@ -191,9 +191,10 @@ public class ReportsController extends OidcTokenAwareController {
         OidcAuthenticationToken token = getValidatedToken(courseId);
         OidcTokenUtils oidcTokenUtils = new OidcTokenUtils(token);
         String[] roles = oidcTokenUtils.getCustomInstructureMembershipRoles();
+        String userLoginId = oidcTokenUtils.getUserLoginId();
         MacroVariableMapper mapper = courseSessionService.getAttributeFromSession(session, courseId, ReportConstants.VARIABLE_REPLACEMENT_DATA_KEY, MacroVariableMapper.class);
 
-        List<DecoratedReport> decoratedReports = reportsService.getReportsToDisplay(courseId, roles, mapper);
+        List<DecoratedReport> decoratedReports = reportsService.getReportsToDisplay(userLoginId, courseId, roles, mapper);
 
         return decoratedReports;
     }

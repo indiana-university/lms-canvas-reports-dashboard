@@ -1,10 +1,10 @@
-package edu.iu.uits.lms.reports.repository;
+package edu.iu.uits.lms.reports.model.ldap;
 
 /*-
  * #%L
  * reports
  * %%
- * Copyright (C) 2015 - 2022 Indiana University
+ * Copyright (C) 2015 - 2024 Indiana University
  * %%
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
@@ -33,38 +33,35 @@ package edu.iu.uits.lms.reports.repository;
  * #L%
  */
 
-import edu.iu.uits.lms.reports.model.ReportListing;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.ListCrudRepository;
-import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Component;
+import lombok.Data;
+import org.springframework.ldap.odm.annotations.Attribute;
+import org.springframework.ldap.odm.annotations.Entry;
+import org.springframework.ldap.odm.annotations.Id;
 
+import javax.naming.Name;
+import java.io.Serializable;
 import java.util.List;
 
-@Component
-public interface ReportListingRepository extends PagingAndSortingRepository<ReportListing, Long>,
-        ListCrudRepository<ReportListing, Long> {
+@Data
+@Entry(base = "OU=Accounts,DC=ads,DC=iu,DC=edu", objectClasses = {"person"})
+public class Person implements Serializable {
 
-   /**
-    * Return all reports that are accessible via the supplied roles, groups, or course
-    * @param roles
-    * @param groups
-    * @param courseId
-    * @return
-    */
-   @Query("""
-           SELECT DISTINCT r FROM ReportListing r
-           left join r.allowedRoles ar
-           left join r.allowedGroups ag
-           left join r.canvasCourseIds cc
-           WHERE (cc IS NULL OR :courseId IN (cc))
-               AND ((:roles IS NOT NULL AND ar IN :roles)
-                  OR (:groups IS NOT NULL AND ag IN :groups))
-           ORDER BY r.title ASC
-           """)
-   List<ReportListing> findAccessibleReports(@Param("roles") String[] roles,
-                                             @Param("groups") String[] groups,
-                                             @Param("courseId") String courseId);
+    @Id
+    private Name id;
+
+    @Attribute(name = "cn", readonly = true)
+    private String username;
+
+//    @Attribute(name = "displayname", readonly = true)
+//    private String displayName;
+//
+//    @Attribute(name = "sn", readonly = true)
+//    private String lastName;
+//
+//    @Attribute(name = "givenname", readonly = true)
+//    private String firstName;
+
+    @Attribute(name = "memberof", readonly = true)
+    private List<Name> memberOf;
 
 }

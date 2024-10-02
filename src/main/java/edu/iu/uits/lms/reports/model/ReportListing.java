@@ -81,6 +81,21 @@ public class ReportListing {
          foreignKey = @ForeignKey(name = "FK_report_role"))
    @EqualsAndHashCode.Exclude
    private List<String> allowedRoles;
+
+   @Column(name = "allowed_group")
+   @ElementCollection(fetch = FetchType.EAGER)
+   @CollectionTable(name = "LMS_REPORT_GROUPS", joinColumns = @JoinColumn(name = "report_id"),
+           foreignKey = @ForeignKey(name = "FK_report_group"))
+   @EqualsAndHashCode.Exclude
+   private List<String> allowedGroups;
+
+   @Column(name = "allowed_course")
+   @ElementCollection(fetch = FetchType.EAGER)
+   @CollectionTable(name = "LMS_REPORT_COURSES", joinColumns = @JoinColumn(name = "report_id"),
+           foreignKey = @ForeignKey(name = "FK_report_course"))
+   @EqualsAndHashCode.Exclude
+   private List<String> canvasCourseIds;
+
    private String contact;
 
    @Column(name = "sis_courses_only")

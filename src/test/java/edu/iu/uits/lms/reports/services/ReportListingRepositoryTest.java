@@ -48,10 +48,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @DataJpaTest
 @ContextConfiguration(classes = {PostgresDBConfig.class})
-@Sql("/reports.sql")
 @Slf4j
 @ActiveProfiles("reports")
 public class ReportListingRepositoryTest {
@@ -63,7 +64,9 @@ public class ReportListingRepositoryTest {
    private JwtDecoder jwtDecoder;
 
    @Test
+   @Sql("/reports.sql")
    public void testRead() throws Exception {
+      String courseId = "12345";
       ReportListing rl = reportListingRepository.findById(1L).orElse(null);
       Assertions.assertNotNull(rl);
       Assertions.assertEquals("Report 1", rl.getTitle(), "title doesn't match");
@@ -73,24 +76,286 @@ public class ReportListingRepositoryTest {
       Assertions.assertNotNull(reports);
       Assertions.assertEquals(3, reports.size());
 
-      List<ReportListing> reportsByRole = reportListingRepository.findDistinctByAllowedRolesInOrderByTitleAsc(new String[]{"StudentEnrollment"});
+      List<ReportListing> reportsByRole = reportListingRepository.findAccessibleReports(new String[]{"StudentEnrollment"},
+              null, courseId);
       Assertions.assertNotNull(reportsByRole);
       Assertions.assertEquals(1, reportsByRole.size());
 
-      reportsByRole = reportListingRepository.findDistinctByAllowedRolesInOrderByTitleAsc(new String[]{"TeacherEnrollment"});
+      reportsByRole = reportListingRepository.findAccessibleReports(new String[]{"TeacherEnrollment"}, null, courseId);
       Assertions.assertNotNull(reportsByRole);
       Assertions.assertEquals(2, reportsByRole.size());
 
-      reportsByRole = reportListingRepository.findDistinctByAllowedRolesInOrderByTitleAsc(new String[]{"TeacherEnrollment", "StudentEnrollment"});
+      reportsByRole = reportListingRepository.findAccessibleReports(new String[]{"TeacherEnrollment", "StudentEnrollment"},
+              null, courseId);
       Assertions.assertNotNull(reportsByRole);
       Assertions.assertEquals(2, reportsByRole.size());
 
-      reportsByRole = reportListingRepository.findDistinctByAllowedRolesInOrderByTitleAsc(new String[]{"TeacherEnrollment", "StudentEnrollment", "Other"});
+      reportsByRole = reportListingRepository.findAccessibleReports(new String[]{"TeacherEnrollment", "StudentEnrollment", "Other"},
+              null, courseId);
       Assertions.assertNotNull(reportsByRole);
       Assertions.assertEquals(2, reportsByRole.size());
 
-      reportsByRole = reportListingRepository.findDistinctByAllowedRolesInOrderByTitleAsc(new String[]{"None"});
+      reportsByRole = reportListingRepository.findAccessibleReports(new String[]{"None"}, null, courseId);
       Assertions.assertNotNull(reportsByRole);
       Assertions.assertEquals(0, reportsByRole.size());
+
+      reportsByRole = reportListingRepository.findAccessibleReports(null, null, courseId);
+      Assertions.assertNotNull(reportsByRole);
+      Assertions.assertEquals(0, reportsByRole.size());
+   }
+
+   @Test
+   void testAccessToReportWithRoleAndCourseRestrictions() {
+      ReportListing rl = new ReportListing();
+      rl.setTitle("Test report");
+      rl.setAllowedRoles(List.of("ROLE1"));
+      rl.setCanvasCourseIds(List.of("12345"));
+      reportListingRepository.save(rl);
+
+      Long reportId = rl.getId();
+      // ROLE2 should not have access to report in this course
+      doCompare(reportId, "12345", new String[]{"ROLE2"}, null, false);
+
+      // ROLE1 should have access to report in this course
+      doCompare(reportId, "12345", new String[]{"ROLE1"}, null, true);
+
+      // Someone with no role can NOT access report in this course
+      doCompare(reportId, "12345", null, null, false);
+
+      // Nothing should have access to the report from a different course
+      doCompare(reportId, "99999", new String[]{"ROLE2"}, null, false);
+      doCompare(reportId, "99999", new String[]{"ROLE1"}, null, false);
+      doCompare(reportId, "99999", null, null, false);
+   }
+
+   @Test
+   void testAccessToReportWithRoleRestrictions() {
+      ReportListing rl = new ReportListing();
+      rl.setTitle("Test report");
+      rl.setAllowedRoles(List.of("ROLE1"));
+      reportListingRepository.save(rl);
+
+      Long reportId = rl.getId();
+      // ROLE2 should not have access to report in any course
+      doCompare(reportId, "12345", new String[]{"ROLE2"}, null, false);
+      doCompare(reportId, "99999", new String[]{"ROLE2"}, null, false);
+
+      // ROLE1 should have access to report in any course
+      doCompare(reportId, "12345", new String[]{"ROLE1"}, null, true);
+      doCompare(reportId, "99999", new String[]{"ROLE1"}, null, true);
+
+      // Someone with no role can NOT access report in any course
+      doCompare(reportId, "12345", null, null, false);
+      doCompare(reportId, "99999", null, null, false);
+
+   }
+
+   @Test
+   void testAccessToReportWithGroupAndCourseRestrictions() {
+      ReportListing rl = new ReportListing();
+      rl.setTitle("Test report");
+      rl.setAllowedGroups(List.of("GROUP1"));
+      rl.setCanvasCourseIds(List.of("12345"));
+      rl = reportListingRepository.save(rl);
+
+      Long reportId = rl.getId();
+
+      // GROUP2 should not have access to report
+      doCompare(reportId, "12345",null, new String[]{"GROUP2"}, false);
+
+      // GROUP1 should have access to report
+      doCompare(reportId, "12345", null, new String[]{"GROUP1"}, true);
+
+      // Someone with no groups can NOT access report
+      doCompare(reportId, "12345", null, null, false);
+
+      // Nothing should have access to the report from a different course
+      doCompare(reportId, "99999", null, new String[]{"GROUP2"}, false);
+      doCompare(reportId, "99999", null, new String[]{"GROUP1"}, false);
+      doCompare(reportId, "99999", null, null, false);
+
+   }
+
+   @Test
+   void testAccessToReportWithGroupRestrictions() {
+      ReportListing rl = new ReportListing();
+      rl.setTitle("Test report");
+      rl.setAllowedGroups(List.of("GROUP1"));
+      rl = reportListingRepository.save(rl);
+
+      Long reportId = rl.getId();
+
+      // GROUP2 should not have access to report
+      doCompare(reportId, "12345",null, new String[]{"GROUP2"}, false);
+      doCompare(reportId, "99999", null, new String[]{"GROUP2"}, false);
+
+      // GROUP1 should have access to report
+      doCompare(reportId, "12345", null, new String[]{"GROUP1"}, true);
+      doCompare(reportId, "99999", null, new String[]{"GROUP1"}, true);
+
+      // Someone with no groups can NOT access report
+      doCompare(reportId, "12345", null, null, false);
+      doCompare(reportId, "99999", null, null, false);
+
+   }
+
+   @Test
+   void testAccessToReportWithNoRoleOrGroupRestrictions() {
+      ReportListing rl = new ReportListing();
+      rl.setTitle("Test report");
+      rl = reportListingRepository.save(rl);
+
+      Long reportId = rl.getId();
+
+      // No restrictions are defined, therefore there should be no access
+      doCompare(reportId, "12345", new String[]{"ROLE1"}, null, false);
+      doCompare(reportId, "99999", new String[]{"ROLE1"}, null, false);
+      doCompare(reportId, "12345", new String[]{"ROLE2"}, null, false);
+      doCompare(reportId, "99999", new String[]{"ROLE2"}, null, false);
+      doCompare(reportId, "12345", null, new String[]{"GROUP1"}, false);
+      doCompare(reportId, "99999", null, new String[]{"GROUP1"}, false);
+      doCompare(reportId, "12345", null, new String[]{"GROUP2"}, false);
+      doCompare(reportId, "99999", null, new String[]{"GROUP2"}, false);
+      doCompare(reportId, "12345", new String[]{"ROLE1"}, new String[]{"GROUP1"}, false);
+      doCompare(reportId, "12345", new String[]{"ROLE1"}, new String[]{"GROUP2"}, false);
+      doCompare(reportId, "12345", new String[]{"ROLE2"}, new String[]{"GROUP1"}, false);
+      doCompare(reportId, "12345", new String[]{"ROLE2"}, new String[]{"GROUP2"}, false);
+      doCompare(reportId, "99999", new String[]{"ROLE1"}, new String[]{"GROUP1"}, false);
+      doCompare(reportId, "99999", new String[]{"ROLE1"}, new String[]{"GROUP2"}, false);
+      doCompare(reportId, "99999", new String[]{"ROLE2"}, new String[]{"GROUP1"}, false);
+      doCompare(reportId, "99999", new String[]{"ROLE2"}, new String[]{"GROUP2"}, false);
+
+      doCompare(reportId, "12345", null, null, false);
+      doCompare(reportId, "99999", null, null, false);
+   }
+
+   @Test
+   void testAccessToReportWithCourseButNoRoleOrGroupRestrictions() {
+      ReportListing rl = new ReportListing();
+      rl.setTitle("Test report");
+      rl.setCanvasCourseIds(List.of("12345"));
+      rl = reportListingRepository.save(rl);
+
+      Long reportId = rl.getId();
+
+      // No restrictions are defined, therefore there should be no access
+      doCompare(reportId, "12345", new String[]{"ROLE1"}, null, false);
+      doCompare(reportId, "99999", new String[]{"ROLE1"}, null, false);
+      doCompare(reportId, "12345", new String[]{"ROLE2"}, null, false);
+      doCompare(reportId, "99999", new String[]{"ROLE2"}, null, false);
+      doCompare(reportId, "12345", null, new String[]{"GROUP1"}, false);
+      doCompare(reportId, "99999", null, new String[]{"GROUP1"}, false);
+      doCompare(reportId, "12345", null, new String[]{"GROUP2"}, false);
+      doCompare(reportId, "99999", null, new String[]{"GROUP2"}, false);
+      doCompare(reportId, "12345", new String[]{"ROLE1"}, new String[]{"GROUP1"}, false);
+      doCompare(reportId, "12345", new String[]{"ROLE1"}, new String[]{"GROUP2"}, false);
+      doCompare(reportId, "12345", new String[]{"ROLE2"}, new String[]{"GROUP1"}, false);
+      doCompare(reportId, "12345", new String[]{"ROLE2"}, new String[]{"GROUP2"}, false);
+      doCompare(reportId, "99999", new String[]{"ROLE1"}, new String[]{"GROUP1"}, false);
+      doCompare(reportId, "99999", new String[]{"ROLE1"}, new String[]{"GROUP2"}, false);
+      doCompare(reportId, "99999", new String[]{"ROLE2"}, new String[]{"GROUP1"}, false);
+      doCompare(reportId, "99999", new String[]{"ROLE2"}, new String[]{"GROUP2"}, false);
+
+      doCompare(reportId, "12345", null, null, false);
+      doCompare(reportId, "99999", null, null, false);
+   }
+
+   @Test
+   void testAccessToReportWithRoleAndGroupRestrictions() {
+      ReportListing rl = new ReportListing();
+      rl.setTitle("Test report");
+      rl.setAllowedRoles(List.of("ROLE1"));
+      rl.setAllowedGroups(List.of("GROUP1"));
+      reportListingRepository.save(rl);
+
+      Long reportId = rl.getId();
+      // ROLE2 should not have access to report in any course
+      doCompare(reportId, "12345", new String[]{"ROLE2"}, null, false);
+      doCompare(reportId, "99999", new String[]{"ROLE2"}, null, false);
+
+      // GROUP2 should not have access to report in any course
+      doCompare(reportId, "12345", null, new String[]{"GROUP2"}, false);
+      doCompare(reportId, "99999", null, new String[]{"GROUP2"}, false);
+
+      // ROLE1 should have access to report in any course
+      doCompare(reportId, "12345", new String[]{"ROLE1"}, null, true);
+      doCompare(reportId, "99999", new String[]{"ROLE1"}, null, true);
+
+      // GROUP1 should have access to report in any course
+      doCompare(reportId, "12345", null, new String[]{"GROUP1"}, true);
+      doCompare(reportId, "99999", null, new String[]{"GROUP1"}, true);
+
+      // Someone with no role or group can NOT access report in any course
+      doCompare(reportId, "12345", null, null, false);
+      doCompare(reportId, "99999", null, null, false);
+
+      // ROLE2 or GROUP2 should not have access to report in any course
+      doCompare(reportId, "12345", new String[]{"ROLE2"}, new String[]{"GROUP2"}, false);
+      doCompare(reportId, "99999", new String[]{"ROLE2"}, new String[]{"GROUP2"}, false);
+
+      // ROLE1 has access even though GROUP2 doesn't
+      doCompare(reportId, "12345", new String[]{"ROLE1"}, new String[]{"GROUP2"}, true);
+      doCompare(reportId, "99999", new String[]{"ROLE1"}, new String[]{"GROUP2"}, true);
+
+      // ROLE2 does not have access, but GROUP1 does
+      doCompare(reportId, "12345", new String[]{"ROLE2"}, new String[]{"GROUP1"}, true);
+      doCompare(reportId, "99999", new String[]{"ROLE2"}, new String[]{"GROUP1"}, true);
+
+      // ROLE1 has access, and so does GROUP1
+      doCompare(reportId, "12345", new String[]{"ROLE1"}, new String[]{"GROUP1"}, true);
+      doCompare(reportId, "99999", new String[]{"ROLE1"}, new String[]{"GROUP1"}, true);
+   }
+
+   @Test
+   void testAccessToReportWithEmptyRolesGroupsRestrictions() {
+      ReportListing rl = new ReportListing();
+      rl.setTitle("Test report");
+      rl.setAllowedRoles(List.of("ROLE1"));
+      rl.setAllowedGroups(List.of("GROUP1"));
+      reportListingRepository.save(rl);
+
+      Long reportId = rl.getId();
+      // ROLE2 should not have access to report in any course
+      doCompare(reportId, "12345", new String[]{"ROLE2"}, new String[0], false);
+      doCompare(reportId, "99999", new String[]{"ROLE2"}, new String[0], false);
+
+      // GROUP2 should not have access to report in any course
+      doCompare(reportId, "12345", new String[0], new String[]{"GROUP2"}, false);
+      doCompare(reportId, "99999", new String[0], new String[]{"GROUP2"}, false);
+
+      // ROLE1 should have access to report in any course
+      doCompare(reportId, "12345", new String[]{"ROLE1"}, new String[0], true);
+      doCompare(reportId, "99999", new String[]{"ROLE1"}, new String[0], true);
+
+      // GROUP1 should have access to report in any course
+      doCompare(reportId, "12345", new String[0], new String[]{"GROUP1"}, true);
+      doCompare(reportId, "99999", new String[0], new String[]{"GROUP1"}, true);
+
+      // Someone with no role or group can NOT access report in any course
+      doCompare(reportId, "12345", new String[0], new String[0], false);
+      doCompare(reportId, "99999", new String[0], new String[0], false);
+
+      // ROLE2 or GROUP2 should not have access to report in any course
+      doCompare(reportId, "12345", new String[]{"ROLE2"}, new String[]{"GROUP2"}, false);
+      doCompare(reportId, "99999", new String[]{"ROLE2"}, new String[]{"GROUP2"}, false);
+
+      // ROLE1 has access even though GROUP2 doesn't
+      doCompare(reportId, "12345", new String[]{"ROLE1"}, new String[]{"GROUP2"}, true);
+      doCompare(reportId, "99999", new String[]{"ROLE1"}, new String[]{"GROUP2"}, true);
+
+      // ROLE2 does not have access, but GROUP1 does
+      doCompare(reportId, "12345", new String[]{"ROLE2"}, new String[]{"GROUP1"}, true);
+      doCompare(reportId, "99999", new String[]{"ROLE2"}, new String[]{"GROUP1"}, true);
+
+      // ROLE1 has access, and so does GROUP1
+      doCompare(reportId, "12345", new String[]{"ROLE1"}, new String[]{"GROUP1"}, true);
+      doCompare(reportId, "99999", new String[]{"ROLE1"}, new String[]{"GROUP1"}, true);
+   }
+
+   private void doCompare(Long reportId, String courseId, String[] roles, String[] groups, boolean result) {
+      List<ReportListing> reports = reportListingRepository.findAccessibleReports(roles, groups, courseId);
+      Assertions.assertNotNull(reports);
+      Optional<ReportListing> report = reports.stream().filter(r -> Objects.equals(reportId, r.getId())).findAny();
+      Assertions.assertEquals(result, report.isPresent());
    }
 }

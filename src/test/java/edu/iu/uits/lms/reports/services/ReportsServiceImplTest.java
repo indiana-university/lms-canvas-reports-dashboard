@@ -39,6 +39,7 @@ import edu.iu.uits.lms.common.variablereplacement.VariableReplacementService;
 import edu.iu.uits.lms.reports.config.PostgresDBConfig;
 import edu.iu.uits.lms.reports.model.DecoratedReport;
 import edu.iu.uits.lms.reports.repository.ReportListingRepository;
+import edu.iu.uits.lms.reports.service.LdapGroupService;
 import edu.iu.uits.lms.reports.service.ReportsService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
@@ -79,6 +80,9 @@ public class ReportsServiceImplTest {
    @MockBean
    private VariableReplacementService variableReplacementService;
 
+   @MockBean
+   private LdapGroupService ldapService;
+
    @BeforeEach
    public void setUp() throws Exception {
 
@@ -103,7 +107,7 @@ public class ReportsServiceImplTest {
    @Test
    public void testReturnAllReports() {
       String[] roles = new String[] {"TeacherEnrollment", "StudentEnrollment", "DesignerEnrollment"};
-      List<DecoratedReport> reports = reportsService.getReportsToDisplay("12345", roles, null);
+      List<DecoratedReport> reports = reportsService.getReportsToDisplay("user1", "12345", roles, null);
 
       Assertions.assertNotNull(reports);
       Assertions.assertEquals(3, reports.size());
@@ -112,7 +116,7 @@ public class ReportsServiceImplTest {
    @Test
    public void testReturnSisReports() {
       String[] roles = new String[] {"TeacherEnrollment", "StudentEnrollment", "DesignerEnrollment"};
-      List<DecoratedReport> reports = reportsService.getReportsToDisplay("54321", roles, null);
+      List<DecoratedReport> reports = reportsService.getReportsToDisplay("user1", "54321", roles, null);
 
       Assertions.assertNotNull(reports);
       Assertions.assertEquals(1, reports.size());
