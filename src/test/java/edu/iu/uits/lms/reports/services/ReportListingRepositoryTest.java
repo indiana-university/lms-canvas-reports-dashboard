@@ -193,6 +193,15 @@ public class ReportListingRepositoryTest {
       doCompare(reportId, "12345", null, new String[]{"GROUP1"}, true);
       doCompare(reportId, "99999", null, new String[]{"GROUP1"}, true);
 
+      doCompare(reportId, "12345", null, new String[]{"GROUP1", "GROUP3"}, true);
+      doCompare(reportId, "99999", null, new String[]{"GROUP1", "GROUP3"}, true);
+      doCompare(reportId, "12345", null, new String[]{"GROUP1", "GROUP2"}, true);
+      doCompare(reportId, "99999", null, new String[]{"GROUP1", "GROUP2"}, true);
+      doCompare(reportId, "12345", null, new String[]{"GROUP1", "GROUP2", "GROUP3"}, true);
+      doCompare(reportId, "99999", null, new String[]{"GROUP1", "GROUP2", "GROUP3"}, true);
+      doCompare(reportId, "12345", null, new String[]{"GROUP2", "GROUP4"}, false);
+      doCompare(reportId, "99999", null, new String[]{"GROUP2", "GROUP4"}, false);
+
       // Someone with no groups can NOT access report
       doCompare(reportId, "12345", null, null, false);
       doCompare(reportId, "99999", null, null, false);
@@ -350,6 +359,49 @@ public class ReportListingRepositoryTest {
       // ROLE1 has access, and so does GROUP1
       doCompare(reportId, "12345", new String[]{"ROLE1"}, new String[]{"GROUP1"}, true);
       doCompare(reportId, "99999", new String[]{"ROLE1"}, new String[]{"GROUP1"}, true);
+   }
+
+   @Test
+   void testAccessToReportWithMultipleGroupRestrictions() {
+      ReportListing rl = new ReportListing();
+      rl.setTitle("Test report");
+      rl.setAllowedGroups(List.of("GROUP1", "GROUP3", "GROUP5"));
+      rl = reportListingRepository.save(rl);
+
+      Long reportId = rl.getId();
+
+      // GROUP2 should not have access to report
+      doCompare(reportId, "12345",null, new String[]{"GROUP2"}, false);
+      doCompare(reportId, "99999", null, new String[]{"GROUP2"}, false);
+
+      // GROUP1 should have access to report
+      doCompare(reportId, "12345", null, new String[]{"GROUP1"}, true);
+      doCompare(reportId, "99999", null, new String[]{"GROUP1"}, true);
+
+      // GROUP3 should have access to report
+      doCompare(reportId, "12345", null, new String[]{"GROUP3"}, true);
+      doCompare(reportId, "99999", null, new String[]{"GROUP3"}, true);
+
+      // GROUP1 and GROUP3 should have access to report
+      doCompare(reportId, "12345", null, new String[]{"GROUP1", "GROUP3"}, true);
+      doCompare(reportId, "99999", null, new String[]{"GROUP1", "GROUP3"}, true);
+
+      // GROUP1 should have access to report, even though GROUP2 does not
+      doCompare(reportId, "12345", null, new String[]{"GROUP1", "GROUP2"}, true);
+      doCompare(reportId, "99999", null, new String[]{"GROUP1", "GROUP2"}, true);
+
+      // GROUP1 and 3 should have access to report, even though 2 does not
+      doCompare(reportId, "12345", null, new String[]{"GROUP1", "GROUP2", "GROUP3"}, true);
+      doCompare(reportId, "99999", null, new String[]{"GROUP1", "GROUP2", "GROUP3"}, true);
+
+      // Neither group2 nor 4 has access to the report
+      doCompare(reportId, "12345", null, new String[]{"GROUP2", "GROUP4"}, false);
+      doCompare(reportId, "99999", null, new String[]{"GROUP2", "GROUP4"}, false);
+
+      // Someone with no groups can NOT access report
+      doCompare(reportId, "12345", null, null, false);
+      doCompare(reportId, "99999", null, null, false);
+
    }
 
    private void doCompare(Long reportId, String courseId, String[] roles, String[] groups, boolean result) {

@@ -78,7 +78,7 @@ public class GroupServiceTest {
         private LdapPersonRepository ldapPersonRepository;
 
         @Test
-        void testNoOpGroupService() {
+        void testLdapGroupService() {
             Assertions.assertInstanceOf(LdapGroupService.class, groupService);
         }
     }
