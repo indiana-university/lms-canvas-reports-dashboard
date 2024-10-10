@@ -34,11 +34,6 @@ reports:
   env: ${app.env}
   instructorRoles: ["Instructor", "urn:lti:instrole:ims/lis/Administrator", "TeacherEnrollment"]
 
-lms.favicon:
-  enabled: true
-#  url: https://assets.iu.edu/favicon.ico
-#  path: /favicon.ico
-
 server:
   error:
     whitelabel:
