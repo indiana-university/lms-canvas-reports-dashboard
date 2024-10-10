@@ -50,7 +50,7 @@
                 <div class="modalImage">
                     <input type="image" th:src=${reportModel.thumbnail} class="img-button rvt-button rvt-button--plain"
                            th:attr="data-rvt-dialog-trigger=@{|page-dialog-${reportModel.id}|}" th:alt="|View preview of ${reportModel.title}|" />
-                    <div th:replace="fragments :: page-dialog(${reportModel.id}, ${reportModel.title}, ${reportModel.image})"></div>
+                    <div th:replace="~{fragments :: page-dialog(${reportModel.id}, ${reportModel.title}, ${reportModel.image})}"></div>
                 </div>
                 <div class="rvt-p-all-sm">
                     <h2 class="rvt-ts-18 rvt-text-bold">
