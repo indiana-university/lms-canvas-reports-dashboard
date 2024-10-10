@@ -100,3 +100,12 @@ springdoc:
   oAuthFlow:
     authorizationUrl: ${oauth.tokenprovider.url}/oauth/authorize
     tokenUrl: ${oauth.tokenprovider.accessTokenUri}
+
+---
+spring:
+  config:
+    activate.on-profile: ldap
+  ldap:
+    urls: ${lms.ldap.url}
+    username: cn=${lms.ldap.username},ou=accounts,dc=ads,dc=iu,dc=edu
+    password: ${lms.ldap.password}

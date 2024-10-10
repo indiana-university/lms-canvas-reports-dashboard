@@ -105,6 +105,14 @@ public class ReportsRestController {
          updated.setAllowedRoles(reportListing.getAllowedRoles());
       }
 
+      if (reportListing.getAllowedGroups() != null && !reportListing.getAllowedGroups().isEmpty()) {
+         updated.setAllowedGroups(reportListing.getAllowedGroups());
+      }
+
+      if (reportListing.getCanvasCourseIds() != null && !reportListing.getCanvasCourseIds().isEmpty()) {
+         updated.setCanvasCourseIds(reportListing.getCanvasCourseIds());
+      }
+
       if (reportListing.getContact() != null) {
          updated.setContact(reportListing.getContact());
       }
@@ -159,6 +167,8 @@ public class ReportsRestController {
       newReportListing.setDescription(reportListing.getDescription());
       newReportListing.setUrl(reportListing.getUrl());
       newReportListing.setAllowedRoles(reportListing.getAllowedRoles());
+      newReportListing.setAllowedGroups(reportListing.getAllowedGroups());
+      newReportListing.setCanvasCourseIds(reportListing.getCanvasCourseIds());
       newReportListing.setContact(reportListing.getContact());
 
       if (reportListing.getSisCoursesOnly() != null) {
