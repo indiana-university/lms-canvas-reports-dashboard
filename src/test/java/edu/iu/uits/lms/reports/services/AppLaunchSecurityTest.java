@@ -43,6 +43,7 @@ import edu.iu.uits.lms.lti.controller.InvalidTokenContextException;
 import edu.iu.uits.lms.lti.service.LmsDefaultGrantedAuthoritiesMapper;
 import edu.iu.uits.lms.reports.config.SecurityConfig;
 import edu.iu.uits.lms.reports.controller.ReportsController;
+import edu.iu.uits.lms.reports.handler.DefaultEmailReportHandler;
 import edu.iu.uits.lms.reports.handler.RosterStatusReportHandler;
 import edu.iu.uits.lms.reports.service.ReportsService;
 import jakarta.servlet.ServletException;
@@ -77,6 +78,9 @@ public class AppLaunchSecurityTest {
 
    @MockBean
    private RosterStatusReportHandler rosterStatusReportHandler = null;
+
+   @MockBean
+   private DefaultEmailReportHandler defaultEmailReportHandler = null;
 
    @MockBean
    private ResourceBundleMessageSource messageSource = null;

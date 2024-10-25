@@ -47,6 +47,7 @@ import edu.iu.uits.lms.lti.controller.OidcTokenAwareController;
 import edu.iu.uits.lms.lti.service.OidcTokenUtils;
 import edu.iu.uits.lms.reports.ReportConstants;
 import edu.iu.uits.lms.reports.ReportsException;
+import edu.iu.uits.lms.reports.handler.DefaultEmailReportHandler;
 import edu.iu.uits.lms.reports.handler.RosterStatusReportHandler;
 import edu.iu.uits.lms.reports.model.DecoratedReport;
 import edu.iu.uits.lms.reports.service.ReportsService;
@@ -76,6 +77,9 @@ public class ReportsController extends OidcTokenAwareController {
 
     @Autowired
     private RosterStatusReportHandler rosterStatusReportHandler = null;
+
+    @Autowired
+    private DefaultEmailReportHandler defaultEmailReportHandler = null;
 
     @Autowired
     private ResourceBundleMessageSource messageSource = null;
@@ -123,6 +127,19 @@ public class ReportsController extends OidcTokenAwareController {
         }
 
         return "rosterStatus";
+    }
+
+    @RequestMapping("/{courseId}/defaultEmail")
+    @Secured(LTIConstants.INSTRUCTOR_AUTHORITY)
+    public String defaultEmailReport(@PathVariable("courseId") String courseId, Model model) {
+        model.addAttribute("headers", defaultEmailReportHandler.getReportHeaders());
+        try {
+            model.addAttribute("data", defaultEmailReportHandler.getReportData());
+        } catch (ReportsException e) {
+            model.addAttribute("error", messageSource.getMessage("canvasDataError", null, Locale.getDefault()));
+        }
+
+        return "defaultEmail";
     }
 
     @RequestMapping("/{courseId}/roleInspector")
