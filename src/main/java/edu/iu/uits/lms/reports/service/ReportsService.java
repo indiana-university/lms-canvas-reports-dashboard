@@ -58,11 +58,23 @@ public class ReportsService {
    @Autowired
    private CourseService courseService = null;
 
-   public List<DecoratedReport> getReportsToDisplay(String courseId, String[] roles, MacroVariableMapper mapper) {
-      Course course = courseService.getCourse(courseId);
+   @Autowired
+   private GroupService groupService;
 
-      //Filter for the roles we want
-      List<ReportListing> reportListings = reportListingRepository.findDistinctByAllowedRolesInOrderByTitleAsc(roles);
+   /**
+    * Get appropriate reports
+    * @param username Username that is attempting to access the reports.  Will be used for potential group lookup.
+    * @param courseId Canvas course id, used to display any course-specific reports
+    * @param roles List of roles for the current user, used to display any role-based reports
+    * @param mapper Variable mapper
+    * @return List of available reports
+    */
+   public List<DecoratedReport> getReportsToDisplay(String username, String courseId, String[] roles, MacroVariableMapper mapper) {
+      Course course = courseService.getCourse(courseId);
+      String[] groups = groupService.getGroupsForUser(username);
+
+      //Filter for the roles/groups/courses we want
+      List<ReportListing> reportListings = reportListingRepository.findAccessibleReports(roles, groups, courseId);
 
       //Decorate and do variable replacement
       List<DecoratedReport> decoratedReports = new ArrayList<>(reportListings.size());

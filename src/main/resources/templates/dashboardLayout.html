@@ -40,6 +40,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta charset="utf-8" />
+    <!-- The below link references commonFragments which lives in common-configuration and comes along on the classpath  -->
+    <link th:replace="~{commonFragments/favicon :: favicon}" />
     <link rel="stylesheet" type="text/css" th:href="@{/app/jsrivet/rivet-core/rivet.min.css}" />
     <link rel="stylesheet" type="text/css" th:href="@{/app/css/dashboard.css}"/>
 </head>
