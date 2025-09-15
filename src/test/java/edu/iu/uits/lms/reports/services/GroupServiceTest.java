@@ -43,9 +43,9 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.NestedTestConfiguration;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import static org.springframework.test.context.NestedTestConfiguration.EnclosingConfiguration.INHERIT;
 
@@ -74,7 +74,7 @@ public class GroupServiceTest {
         @Autowired
         private GroupService groupService;
 
-        @MockBean
+        @MockitoBean
         private LdapPersonRepository ldapPersonRepository;
 
         @Test

@@ -49,11 +49,11 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.util.List;
@@ -68,19 +68,19 @@ public class ReportsServiceImplTest {
    @Autowired
    private ReportsService reportsService;
 
-   @MockBean
+   @MockitoBean
    private CourseService courseService;
 
    @Autowired
    private ReportListingRepository reportListingRepository;
 
-   @MockBean
+   @MockitoBean
    private JwtDecoder jwtDecoder;
 
-   @MockBean
+   @MockitoBean
    private VariableReplacementService variableReplacementService;
 
-   @MockBean
+   @MockitoBean
    private LdapGroupService ldapService;
 
    @BeforeEach
