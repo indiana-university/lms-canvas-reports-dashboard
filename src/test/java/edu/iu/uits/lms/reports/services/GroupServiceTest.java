@@ -4,7 +4,7 @@ package edu.iu.uits.lms.reports.services;
  * #%L
  * reports
  * %%
- * Copyright (C) 2015 - 2024 Indiana University
+ * Copyright (C) 2015 - 2025 Indiana University
  * %%
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
@@ -43,9 +43,9 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.NestedTestConfiguration;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import static org.springframework.test.context.NestedTestConfiguration.EnclosingConfiguration.INHERIT;
 
@@ -74,7 +74,7 @@ public class GroupServiceTest {
         @Autowired
         private GroupService groupService;
 
-        @MockBean
+        @MockitoBean
         private LdapPersonRepository ldapPersonRepository;
 
         @Test

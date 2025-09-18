@@ -3,7 +3,7 @@
   #%L
   reports
   %%
-  Copyright (C) 2015 - 2022 Indiana University
+  Copyright (C) 2015 - 2025 Indiana University
   %%
   Redistribution and use in source and binary forms, with or without modification,
   are permitted provided that the following conditions are met:
@@ -44,62 +44,6 @@
         <h1 th:text="#{rosterStatus.pageTitle(${courseCode})}">Report title</h1>
 
         <div id="buttonContainer"></div>
-        
-        <!-- add descriptive text to these inputs for users with screenreaders - not displayed on screen -->
-        <span id="searchText" hidden>Search for data within the report</span>
-        <span id="numEntriesText" hidden>Select the number of rows to be displayed in the report</span>
-        <span id="sortingAnnc" class="sr-only" aria-live="polite"></span>
-        
-        <table id="reportTable" class="display nowrap" th:summary="#{rosterStatus.report.summary}">
-            <thead>
-            <tr>
-                <th th:each="header : ${headers}" th:text="${header}" th:scope="col">Column Header</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="enrollment : ${data}">
-                <th th:text="${enrollment.name}" th:scope="row">name</th>
-                <td th:text="${enrollment.username}">username</td>
-                <td th:text="${enrollment.role}">role</td>
-                <td th:text="${enrollment.section}">section</td>
-                <td th:text="${enrollment.status}">status</td>
-                <td th:text="${#dates.format(enrollment.createdDate, #messages.msg('rosterStatus.timeFormat'))}">createdDate</td>
-                <td th:text="${#dates.format(enrollment.updatedDate, #messages.msg('rosterStatus.timeFormat'))}">updatedDate</td>
-            </tr>
-            </tbody>
-        </table>
-
-    </div>
-
-    <script type="text/javascript" layout:fragment="js_init">
-    <!--
-        $(document).ready(function() {
-            $('#reportTable').DataTable( {
-                layout: {
-                    topStart: {
-                        buttons: [
-                            {
-                                extend: 'csv',
-                                text: 'Download CSV File'
-                            }
-                        ],
-                        pageLength: {
-                            menu: [10, 25, 50, 100, { label: 'All', value: -1 }]
-                        }
-                    }
-                },
-                pageLength: -1,
-                language: {
-                    paginate: {
-                        previous: 'Previous page',
-                        next: 'Next page'
-                    }
-                 }
-            });
-            
-            reports.applyAccessibilityOverrides();
-        });
-        -->
-    </script>
+            </script>
 </body>
 </html>

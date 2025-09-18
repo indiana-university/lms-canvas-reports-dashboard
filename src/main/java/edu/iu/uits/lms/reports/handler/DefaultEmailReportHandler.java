@@ -4,7 +4,7 @@ package edu.iu.uits.lms.reports.handler;
  * #%L
  * reports
  * %%
- * Copyright (C) 2015 - 2024 Indiana University
+ * Copyright (C) 2015 - 2025 Indiana University
  * %%
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
@@ -79,19 +79,6 @@ public class DefaultEmailReportHandler {
 
         return headers;
     }
-
-    /*
-    SELECT u.canvas_user_id AS "Canvas UserID", u.user_id AS "SIS EmplID", u.login_id AS "Login ID", u.first_name AS "First Name",
-    u.last_name AS "Last Name", u.email AS "primary_email", p.pseudonym_id AS "Pseudonym ID", p.unique_id AS "Unique ID,
-    p.created_at AS "Pseudo Created", p.updated_at AS "Pseudo Updated",  p.last_request_at AS "Last Request"
-FROM canvas_warehouse.api_canvas_users u
-INNER JOIN iu_la.cd_pseudonyms_flt p ON (u.canvas_user_id = p.user_id)
-WHERE ((u.user_id LIKE '0%') OR (u.user_id LIKE '2%'))
-AND u.user_id NOT LIKE '%@%'
-AND u.email NOT LIKE '%@iu.edu'
-AND u.status != 'deleted'
-AND p.workflow_state != 'deleted';
-     */
 
     public  List<UserDetails> getReportData() throws ReportsException {
         String sql = """

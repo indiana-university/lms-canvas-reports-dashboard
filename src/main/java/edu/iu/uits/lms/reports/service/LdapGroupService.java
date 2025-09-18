@@ -4,7 +4,7 @@ package edu.iu.uits.lms.reports.service;
  * #%L
  * reports
  * %%
- * Copyright (C) 2015 - 2024 Indiana University
+ * Copyright (C) 2015 - 2025 Indiana University
  * %%
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
@@ -39,10 +39,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.ldap.support.LdapUtils;
 import org.springframework.stereotype.Service;
-
-/**
- * LDAP based implementation of the GroupService
- */
 @Service
 @Profile("ldap")
 public class LdapGroupService implements GroupService {

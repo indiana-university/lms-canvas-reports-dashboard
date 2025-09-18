@@ -4,7 +4,7 @@ package edu.iu.uits.lms.reports.model;
  * #%L
  * reports
  * %%
- * Copyright (C) 2015 - 2022 Indiana University
+ * Copyright (C) 2015 - 2025 Indiana University
  * %%
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
@@ -37,10 +37,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-
-/**
- * Created by chmaurer on 11/18/15.
- */
 @Data
 @RequiredArgsConstructor
 @AllArgsConstructor

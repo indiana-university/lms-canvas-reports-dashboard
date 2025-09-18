@@ -4,7 +4,7 @@ package edu.iu.uits.lms.reports.service;
  * #%L
  * reports
  * %%
- * Copyright (C) 2015 - 2022 Indiana University
+ * Copyright (C) 2015 - 2025 Indiana University
  * %%
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
@@ -60,15 +60,6 @@ public class ReportsService {
 
    @Autowired
    private GroupService groupService;
-
-   /**
-    * Get appropriate reports
-    * @param username Username that is attempting to access the reports.  Will be used for potential group lookup.
-    * @param courseId Canvas course id, used to display any course-specific reports
-    * @param roles List of roles for the current user, used to display any role-based reports
-    * @param mapper Variable mapper
-    * @return List of available reports
-    */
    public List<DecoratedReport> getReportsToDisplay(String username, String courseId, String[] roles, MacroVariableMapper mapper) {
       Course course = courseService.getCourse(courseId);
       String[] groups = groupService.getGroupsForUser(username);

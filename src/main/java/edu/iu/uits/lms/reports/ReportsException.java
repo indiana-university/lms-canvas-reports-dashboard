@@ -4,7 +4,7 @@ package edu.iu.uits.lms.reports;
  * #%L
  * reports
  * %%
- * Copyright (C) 2015 - 2022 Indiana University
+ * Copyright (C) 2015 - 2025 Indiana University
  * %%
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
@@ -31,10 +31,6 @@ package edu.iu.uits.lms.reports;
  * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  * #L%
- */
-
-/**
- * Created by chmaurer on 5/20/16.
  */
 public class ReportsException extends Exception {
 

@@ -4,7 +4,7 @@ package edu.iu.uits.lms.reports.repository;
  * #%L
  * reports
  * %%
- * Copyright (C) 2015 - 2024 Indiana University
+ * Copyright (C) 2015 - 2025 Indiana University
  * %%
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
@@ -37,10 +37,6 @@ import edu.iu.uits.lms.reports.model.ldap.Person;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.ldap.repository.LdapRepository;
 import org.springframework.stereotype.Repository;
-
-/**
- * Repository implementation that uses LDAP as a backend
- */
 @Repository
 @Profile("ldap")
 public interface LdapPersonRepository extends LdapRepository<Person> {

@@ -4,7 +4,7 @@ package edu.iu.uits.lms.reports.service;
  * #%L
  * reports
  * %%
- * Copyright (C) 2015 - 2024 Indiana University
+ * Copyright (C) 2015 - 2025 Indiana University
  * %%
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
@@ -34,11 +34,5 @@ package edu.iu.uits.lms.reports.service;
  */
 
 public interface GroupService {
-
-    /**
-     * Get groups for the given username
-     * @param username
-     * @return
-     */
     String[] getGroupsForUser(String username);
 }

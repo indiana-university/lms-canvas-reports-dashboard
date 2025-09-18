@@ -4,7 +4,7 @@ package edu.iu.uits.lms.reports.repository;
  * #%L
  * reports
  * %%
- * Copyright (C) 2015 - 2022 Indiana University
+ * Copyright (C) 2015 - 2025 Indiana University
  * %%
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
@@ -45,14 +45,6 @@ import java.util.List;
 @Component
 public interface ReportListingRepository extends PagingAndSortingRepository<ReportListing, Long>,
         ListCrudRepository<ReportListing, Long> {
-
-   /**
-    * Return all reports that are accessible via the supplied roles, groups, or course
-    * @param roles
-    * @param groups
-    * @param courseId
-    * @return
-    */
    @Query("""
            SELECT DISTINCT r FROM ReportListing r
            left join r.allowedRoles ar
