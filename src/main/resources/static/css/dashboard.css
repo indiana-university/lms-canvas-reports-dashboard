@@ -56,8 +56,6 @@ ol.reportData {
 .modalImageWidth {
     max-width: 100%;
 }
-
-/* override max width */
 .dialog-width-override {
     max-width: 50rem;
 }

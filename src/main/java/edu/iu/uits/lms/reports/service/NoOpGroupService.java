@@ -35,10 +35,6 @@ package edu.iu.uits.lms.reports.service;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
-
-/**
- * Default implementation of the GroupService that essentially does nothing, in case ldap is not configured/desired
- */
 @Service
 @Profile("!ldap")
 public class NoOpGroupService implements GroupService {

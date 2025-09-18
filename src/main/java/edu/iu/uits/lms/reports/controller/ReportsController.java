@@ -33,10 +33,6 @@ package edu.iu.uits.lms.reports.controller;
  * #L%
  */
 
-/**
- * Created by chmaurer on 9/25/15.
- */
-
 import edu.iu.uits.lms.canvas.model.Course;
 import edu.iu.uits.lms.canvas.services.CourseService;
 import edu.iu.uits.lms.common.session.CourseSessionService;

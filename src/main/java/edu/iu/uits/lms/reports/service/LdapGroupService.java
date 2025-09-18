@@ -39,10 +39,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.ldap.support.LdapUtils;
 import org.springframework.stereotype.Service;
-
-/**
- * LDAP based implementation of the GroupService
- */
 @Service
 @Profile("ldap")
 public class LdapGroupService implements GroupService {

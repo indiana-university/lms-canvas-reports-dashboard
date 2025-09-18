@@ -45,10 +45,6 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-/**
- * Created by chmaurer on 9/30/15.
- */
 @Slf4j
 @Component
 public class RosterStatusReportHandler {

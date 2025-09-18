@@ -44,67 +44,6 @@
         <h1 class="rvt-ts-36 rvt-p-top-sm" th:text="#{defaultEmail.pageTitle}">Report title</h1>
 
         <div id="buttonContainer"></div>
-        
-        <!-- add descriptive text to these inputs for users with screenreaders - not displayed on screen -->
-        <span id="searchText" hidden>Search for data within the report</span>
-        <span id="numEntriesText" hidden>Select the number of rows to be displayed in the report</span>
-        <span id="sortingAnnc" class="sr-only" aria-live="polite"></span>
-        
-        <table id="reportTable" classX="display nowrap" class="rvt-table-stripes full-table-width" th:summary="#{defaultEmail.report.summary}">
-            <thead>
-            <tr>
-                <th th:each="header : ${headers}" th:text="${header}" th:scope="col">Column Header</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="record : ${data}">
-                <th th:text="${record.canvasUserId}" th:scope="row">canvasUserId</th>
-                <td th:text="${record.userId}">userId</td>
-                <td th:text="${record.loginId}">loginId</td>
-                <td th:text="${record.firstName}">firstName</td>
-                <td th:text="${record.lastName}">lastName</td>
-                <td th:text="${record.primaryEmail}">primaryEmail</td>
-                <td th:text="${record.pseudonymId}">pseudonymId</td>
-                <td th:text="${record.uniqueId}">uniqueId</td>
-                <td th:text="${#dates.format(record.createdAt, #messages.msg('defaultEmail.timeFormat'))}">createdAt</td>
-                <td th:text="${#dates.format(record.updatedAt, #messages.msg('defaultEmail.timeFormat'))}">updatedAt</td>
-                <td th:text="${#dates.format(record.lastRequestAt, #messages.msg('defaultEmail.timeFormat'))}">lastRequestAt</td>
-            </tr>
-            </tbody>
-        </table>
-
-    </div>
-
-    <script type="text/javascript" layout:fragment="js_init">
-    <!--
-        $(document).ready(function() {
-            $('#reportTable').DataTable( {
-                layout: {
-                    topStart: {
-                        buttons: [
-                            {
-                                extend: 'csv',
-                                text: 'Download CSV File',
-                                className: 'rvt-button'
-                            }
-                        ],
-                        pageLength: {
-                            menu: [10, 25, 50, 100, { label: 'All', value: -1 }]
-                        }
-                    }
-                },
-                pageLength: -1,
-                language: {
-                    paginate: {
-                        previous: 'Previous page',
-                        next: 'Next page'
-                    }
-                 }
-            });
-            
-            reports.applyAccessibilityOverrides();
-        });
-        -->
-    </script>
+            </script>
 </body>
 </html>

@@ -2,7 +2,7 @@ package edu.iu.uits.lms.reports.services;
 
 /*-
  * #%L
- * course-unlocker
+ * reports
  * %%
  * Copyright (C) 2015 - 2025 Indiana University
  * %%

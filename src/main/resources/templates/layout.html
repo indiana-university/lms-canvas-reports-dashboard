@@ -37,9 +37,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <title th:text="#{withdrawnStudentGrades.pageTitle(${sisCourseId})}">Page Title</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <!-- The below link references commonFragments which lives in common-configuration and comes along on the classpath  -->
-    <link th:replace="~{commonFragments/favicon :: favicon}" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />    <link th:replace="~{commonFragments/favicon :: favicon}" />
 
     <link rel="stylesheet" type="text/css" th:href="@{/app/jsrivet/rivet-core/rivet.min.css}" />
     <link rel="stylesheet" type="text/css" th:href="@{/app/webjars/datatables/css/dataTables.dataTables.min.css}"/>

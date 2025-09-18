@@ -34,11 +34,5 @@ package edu.iu.uits.lms.reports.service;
  */
 
 public interface GroupService {
-
-    /**
-     * Get groups for the given username
-     * @param username
-     * @return
-     */
     String[] getGroupsForUser(String username);
 }

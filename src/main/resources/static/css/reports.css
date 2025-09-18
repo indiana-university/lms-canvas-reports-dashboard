@@ -33,8 +33,6 @@
 body {
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
-
-/* Show X entries */
 #reportTable_length {
     margin-left: 1em;
 }

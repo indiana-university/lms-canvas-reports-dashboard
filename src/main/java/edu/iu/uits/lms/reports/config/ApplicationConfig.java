@@ -56,26 +56,7 @@ public class ApplicationConfig implements WebMvcConfigurer {
 
    @Override
    // used to read in various directories to add resources for the templates to use
-   public void addResourceHandlers(ResourceHandlerRegistry registry) {
-      registry.addResourceHandler("/app/css/**").addResourceLocations("classpath:/static/css/");
-      registry.addResourceHandler("/app/js/**").addResourceLocations("classpath:/static/js/");
-      registry.addResourceHandler("/app/images/**").addResourceLocations("classpath:/static/images/");
-      registry.addResourceHandler("/app/webjars/**").addResourceLocations("/webjars/").resourceChain(true);
-      registry.addResourceHandler("/app/jsrivet/**").addResourceLocations("classpath:/META-INF/resources/jsrivet/").resourceChain(true);
-   }
-
-   @Bean
-   public ResourceBundleMessageSource messageSource() {
-      ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-      messageSource.setBasename("bundles/reports");
-      return messageSource;
-   }
-
-   /**
-    * Uses a custom resolver that either uses an x-auth-token header for the passed request path,
-    * otherwise uses a cookie for tracking the session
-    */
-   @Bean
+   public void addResourceHandlers(ResourceHandlerRegistry registry) {   @Bean
    public HttpSessionIdResolver httpSessionIdResolver() {
       return new DualSessionIdResolver("/app/rest/");
    }
