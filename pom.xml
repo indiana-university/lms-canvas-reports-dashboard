@@ -68,9 +68,9 @@
         <jquery.version>3.7.1</jquery.version>
         <logcaptor.version>2.12.1</logcaptor.version>
 
-        <lms-canvas-rivet.version>6.2.9.1_1-SNAPSHOT</lms-canvas-rivet.version>
-        <lms-embedded-services.version>6.3.0-SNAPSHOT</lms-embedded-services.version>
-        <lms-team-spring-boot-it12>6.5.2_1-SNAPSHOT</lms-team-spring-boot-it12>
+        <lms-canvas-rivet.version>6.2.9.1_1</lms-canvas-rivet.version>
+        <lms-embedded-services.version>6.3.0</lms-embedded-services.version>
+        <lms-team-spring-boot-it12>6.5.2_1</lms-team-spring-boot-it12>
 
         <plugins.compiler.version>3.14.1</plugins.compiler.version>
         <plugins.license.version>2.7.0</plugins.license.version>
