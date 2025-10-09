@@ -182,3 +182,4 @@ Variables requiring a custom implementation:
 - ${CLASS_NBR}
 - ${SIS_TERM_ID}
 - ${SIS_CAMPUS}
+- ${CANVAS_COURSE_CODE}
