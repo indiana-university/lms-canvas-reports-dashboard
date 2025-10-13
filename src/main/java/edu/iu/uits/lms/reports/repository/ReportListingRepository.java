@@ -45,6 +45,14 @@ import java.util.List;
 @Component
 public interface ReportListingRepository extends PagingAndSortingRepository<ReportListing, Long>,
         ListCrudRepository<ReportListing, Long> {
+
+   /**
+    * Return all reports that are accessible via the supplied roles, groups, or course
+    * @param roles
+    * @param groups
+    * @param courseId
+    * @return
+    */
    @Query("""
            SELECT DISTINCT r FROM ReportListing r
            left join r.allowedRoles ar

@@ -37,6 +37,10 @@ import edu.iu.uits.lms.reports.model.ldap.Person;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.ldap.repository.LdapRepository;
 import org.springframework.stereotype.Repository;
+
+/**
+ * Repository implementation that uses LDAP as a backend
+ */
 @Repository
 @Profile("ldap")
 public interface LdapPersonRepository extends LdapRepository<Person> {
