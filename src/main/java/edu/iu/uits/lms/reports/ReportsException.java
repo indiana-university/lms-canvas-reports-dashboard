@@ -32,6 +32,10 @@ package edu.iu.uits.lms.reports;
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
+/**
+ * Created by chmaurer on 5/20/16.
+ */
 public class ReportsException extends Exception {
 
     public ReportsException() {

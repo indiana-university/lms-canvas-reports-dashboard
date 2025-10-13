@@ -37,6 +37,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+
+/**
+ * Created by chmaurer on 11/18/15.
+ */
 @Data
 @RequiredArgsConstructor
 @AllArgsConstructor
