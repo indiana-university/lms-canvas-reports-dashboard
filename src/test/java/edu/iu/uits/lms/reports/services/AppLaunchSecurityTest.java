@@ -44,7 +44,6 @@ import edu.iu.uits.lms.lti.service.LmsDefaultGrantedAuthoritiesMapper;
 import edu.iu.uits.lms.reports.config.SecurityConfig;
 import edu.iu.uits.lms.reports.controller.ReportsController;
 import edu.iu.uits.lms.reports.handler.DefaultEmailReportHandler;
-import edu.iu.uits.lms.reports.handler.RosterStatusReportHandler;
 import edu.iu.uits.lms.reports.service.ReportsService;
 import jakarta.servlet.ServletException;
 import org.junit.jupiter.api.Assertions;
@@ -75,9 +74,6 @@ public class AppLaunchSecurityTest {
 
    @MockitoBean
    private CourseService courseService = null;
-
-   @MockitoBean
-   private RosterStatusReportHandler rosterStatusReportHandler = null;
 
    @MockitoBean
    private DefaultEmailReportHandler defaultEmailReportHandler = null;

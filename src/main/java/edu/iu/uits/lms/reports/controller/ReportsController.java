@@ -37,8 +37,6 @@ package edu.iu.uits.lms.reports.controller;
  * Created by chmaurer on 9/25/15.
  */
 
-import edu.iu.uits.lms.canvas.model.Course;
-import edu.iu.uits.lms.canvas.services.CourseService;
 import edu.iu.uits.lms.common.session.CourseSessionService;
 import edu.iu.uits.lms.common.variablereplacement.MacroVariableMapper;
 import edu.iu.uits.lms.common.variablereplacement.VariableReplacementService;
@@ -48,7 +46,6 @@ import edu.iu.uits.lms.lti.service.OidcTokenUtils;
 import edu.iu.uits.lms.reports.ReportConstants;
 import edu.iu.uits.lms.reports.ReportsException;
 import edu.iu.uits.lms.reports.handler.DefaultEmailReportHandler;
-import edu.iu.uits.lms.reports.handler.RosterStatusReportHandler;
 import edu.iu.uits.lms.reports.model.DecoratedReport;
 import edu.iu.uits.lms.reports.service.ReportsService;
 import jakarta.servlet.http.HttpSession;
@@ -71,12 +68,6 @@ import java.util.Locale;
 @RequestMapping("/app")
 @Slf4j
 public class ReportsController extends OidcTokenAwareController {
-
-    @Autowired
-    private CourseService courseService = null;
-
-    @Autowired
-    private RosterStatusReportHandler rosterStatusReportHandler = null;
 
     @Autowired
     private DefaultEmailReportHandler defaultEmailReportHandler = null;
@@ -110,23 +101,6 @@ public class ReportsController extends OidcTokenAwareController {
         model.addAttribute("toolPath", "/app/" + courseId + "/" + pathIdentifier);
 
         return "loading";
-    }
-
-    @RequestMapping("/{courseId}/rosterStatus")
-    @Secured(LTIConstants.INSTRUCTOR_AUTHORITY)
-    public String rosterStatusReport(@PathVariable("courseId") String courseId, Model model) {
-        Course course = courseService.getCourse(courseId);
-        String courseCode = course.getCourseCode();
-
-        model.addAttribute("courseCode", courseCode);
-        model.addAttribute("headers", rosterStatusReportHandler.getReportHeaders());
-        try {
-            model.addAttribute("data", rosterStatusReportHandler.getReportData(courseId));
-        } catch (ReportsException e) {
-            model.addAttribute("error", messageSource.getMessage("canvasDataError", null, Locale.getDefault()));
-        }
-
-        return "rosterStatus";
     }
 
     @RequestMapping("/{courseId}/defaultEmail")
