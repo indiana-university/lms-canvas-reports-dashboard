@@ -58,7 +58,7 @@ import java.util.Date;
 @EnableGlobalErrorHandler
 @Slf4j
 @EnableCookieFilter(ignoredRequestPatterns = {"/rest/**", "/app/rest/**"})
-@EnableLtiClient(toolKeys = {"lms_reports", "lms_roster_status_report"})
+@EnableLtiClient(toolKeys = {"lms_reports"})
 @EnableCanvasClient
 @EnableIuOnlyClient
 @EnableConfigurationProperties(GitRepositoryState.class)

@@ -36,7 +36,6 @@ package edu.iu.uits.lms.reports.services;
 import edu.iu.uits.lms.lti.config.TestUtils;
 import edu.iu.uits.lms.reports.WebApplication;
 import edu.iu.uits.lms.reports.handler.DefaultEmailReportHandler;
-import edu.iu.uits.lms.reports.handler.RosterStatusReportHandler;
 import edu.iu.uits.lms.reports.repository.ReportListingRepository;
 import lombok.extern.slf4j.Slf4j;
 import nl.altindag.log.LogCaptor;
@@ -86,9 +85,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class It12LoggingTest {
     @Autowired
     private MockMvc mvc;
-
-    @MockitoBean
-    private RosterStatusReportHandler rosterStatusReportHandler;
 
     @MockitoBean
     private DefaultEmailReportHandler defaultEmailReportHandler;
