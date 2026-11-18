@@ -4,7 +4,7 @@ package edu.iu.uits.lms.reports.services;
  * #%L
  * reports
  * %%
- * Copyright (C) 2015 - 2025 Indiana University
+ * Copyright (C) 2015 - 2026 Indiana University
  * %%
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
@@ -60,6 +60,10 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import uk.ac.ox.ctl.lti13.ags.DeepLinkService;
+import uk.ac.ox.ctl.lti13.ags.LineItemService;
+import uk.ac.ox.ctl.lti13.ags.ResultService;
+import uk.ac.ox.ctl.lti13.ags.ScoreService;
 import uk.ac.ox.ctl.lti13.nrps.NamesRoleService;
 
 import java.time.Instant;
@@ -97,6 +101,23 @@ public class It12LoggingTest {
 
     @MockitoBean
     private NamesRoleService namesRoleService;
+
+    // LtiClientConfig eagerly builds real LineItemService/ScoreService/ResultService/DeepLinkService
+    // beans that call Lti13Service.getJKS(), which needs a real signing keypair from the
+    // KeyPairRepository table - not present in the test H2 database. Mock them out so context load
+    // doesn't try to construct the real ones. (Same pattern used in course-setup-wizard's
+    // It12LoggingTest - not specific to this tool or this lms-embedded-services version.)
+    @MockitoBean
+    private LineItemService lineItemService;
+
+    @MockitoBean
+    private ScoreService scoreService;
+
+    @MockitoBean
+    private ResultService resultService;
+
+    @MockitoBean
+    private DeepLinkService deepLinkService;
 
     @Test
     public void testLmsEnhancementToIt12LogExistence() throws Exception {

@@ -4,7 +4,7 @@ package edu.iu.uits.lms.reports.config;
  * #%L
  * reports
  * %%
- * Copyright (C) 2015 - 2025 Indiana University
+ * Copyright (C) 2015 - 2026 Indiana University
  * %%
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
@@ -42,7 +42,6 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.expression.WebExpressionAuthorizationManager;
@@ -80,9 +79,11 @@ public class SecurityConfig {
     @Bean
     @Order(6)
     public SecurityFilterChain appFilterChain(HttpSecurity http) throws Exception {
-        http.securityMatcher(WELL_KNOWN_ALL, "/error", "/app/**")
+        http.securityMatcher(WELL_KNOWN_ALL, "/error", "/app/**", "/favicon.ico")
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers(WELL_KNOWN_ALL, "/error").permitAll()
+                        .requestMatchers("/app/jsrivet/**", "/app/webjars/**", "/app/css/**",
+                                "/app/js/**", "/app/images/**", "/favicon.ico").permitAll()
                         .requestMatchers("/**").hasAuthority(BASE_USER_AUTHORITY)
                 )
                 .headers(headers -> headers
@@ -93,12 +94,6 @@ public class SecurityConfig {
         return http.build();
     }
 
-
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        // ignore everything except paths specified
-        return web -> web.ignoring().requestMatchers("/app/jsrivet/**", "/app/webjars/**", "/app/css/**", "/app/js/**", "/app/images/**", "/favicon.ico");
-    }
 
     @Bean
     @Order(7)
